@@ -10,17 +10,14 @@ main{
     text-align: center;
 }
 
-/* .container{
-    display: grid;
-    /* justify-content: center; */
-    /* width: 80%;
-    
+.container{
+    width: 80%;
 }
 
 .col{
     border: 40px black; 
 
-} */
+}
 
 footer{
     text-align: center;

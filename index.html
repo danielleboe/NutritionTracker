@@ -8,6 +8,11 @@
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+  <!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
     <!-- <link
       type="text/css"
       rel="stylesheet"
@@ -41,18 +46,7 @@
 
 
       <!-- Modal Trigger -->
-  
 
-  <!-- Modal Structure -->
-  <div id="modal1" class="modal">
-    <div class="modal-content">
-      <h4>Modal Header</h4>
-      <p>A bunch of text</p>
-    </div>
-    <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
-    </div>
-  </div>
 
 
 
@@ -60,7 +54,7 @@
       <div class="button-container">
         <button
           type="button"
-          class="btn waves-effect waves-light modal-trigger" href="#modal1"
+          class="btn waves-effect waves-light modal-trigger" href="#foodModal"
           data-bs-toggle="modal"
           data-bs-target="#foodModal"
           id="myBtn"
@@ -97,7 +91,7 @@ aria-hidden="true"
         </div>
         <ul class="list-group list-group-flush">
           <li class="card-body">
-            <label for="datepicker" class="form-label"
+            <label for="datepicker" classs="form-label"
               >Date</label
             >
             <input
@@ -108,12 +102,12 @@ aria-hidden="true"
             />
           </li>
           <li class="card-body">
-            <label for="foodName" class="form-label">Task Title</label>
+            <label for="foodItem" class="form-label">Task Title</label>
             <input
               type="text"
               class="form-control"
-              id="foodName"
-              name="food_name"
+              id="foodItem"
+              name="food_item"
             />
           </li>
             <li class="card-body">
@@ -128,9 +122,10 @@ aria-hidden="true"
             <button
               type="submit"
               class="btn btn-primary"
-              id="submit-new-task"
-            >
-              Save
+              id="submit-new-food"
+            ></button>
+
+              <a href="#!" class="modal-close waves-effect waves-green btn-flat">Save</a>
             </button>
           </li>
         </ul>

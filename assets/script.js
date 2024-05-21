@@ -27,10 +27,9 @@ const btn = document.getElementById("myBtn");
 // Get the <span> element that closes the modal
 const closeButton = document.getElementsByClassName("close")[0];
 
-// When the user clicks the button, open the modal
-btn.onclick = function () {
-  newFood.style.display = "block";
-};
+$(document).ready(function(){
+    $('.modal').modal();
+  });
 
 // When the user clicks on <span> (x), close the modal
 closeButton.onclick = function () {
@@ -44,9 +43,9 @@ window.onclick = function (event) {
   }
 };
 
-$(function () {
-  $("#datepicker").datepicker();
-});
+$( function() {
+    $( "#datepicker" ).datepicker();
+  } );
 
 submitFood.addEventListener("click", function (event) {
   event.preventDefault();
@@ -141,15 +140,6 @@ const sortResult = lastFood.sort(function (a, b) {
 });
 
 for (const singleFood of lastFood) {
-  //   const todoCards = document.getElementById("todo-cards");
-  //   const inProgress = document.getElementById("in-progress-cards");
-  //   const done = document.getElementById("done-cards");
-  //   const taskCard = document.createElement("div");
-  //   const taskName = document.createElement("div");
-  //   const taskBody = document.createElement("div");
-  //   const taskDescription = document.createElement("p");
-  //   const taskDueDate = document.createElement("p");
-
   const foodRow = document.createElement("div");
   const foodRecord = document.createElement("div");
   const calorieRecord = document.createElement("div");
@@ -159,41 +149,16 @@ for (const singleFood of lastFood) {
   calorieRecord.textContent = singleFood.foodCaloriesForm;
   foodDateForm.textContent = singleFood.foodDateForm;
   deleteFood.textContent = `Delete`;
-
-  // if (singleFood.state === "inProgress") {
-  //     inProgress.appendChild(taskCard);
-  //   } else if (singleFood.state === "done") {
-  //     done.appendChild(taskCard);
-  //   } else {
-  //     todoCards.appendChild(taskCard);
-  //   }
-
   foodRow.appendChild(foodRecord);
   foodRow.appendChild(calorieRecord);
   foodRow.appendChild(deleteFood);
-  //   taskBody.appendChild(taskDueDate);
   foodRow.appendChild(deleteFood);
 
   foodRow.setAttribute("class", "row food-row");
   foodRecord.setAttribute("class", "col s6 m6 l6");
   calorieRecord.setAttribute("class", "col s6 m6 l6");
 
-  //   taskBody.setAttribute("class", "card-body task");
-  //   taskCard.setAttribute("class", "card");
-  //   taskCard.setAttribute("draggable", "true");
-  //   taskCard.setAttribute("ondragstart", "drag(event)");
-  //   taskCard.setAttribute("id", singleFood.taskId);
-  //   taskName.setAttribute("class", "card-header");
-  //   taskDescription.setAttribute("class", "card-text taskDescription");
-  //   deleteTask.setAttribute("class", "btn btn-primary delete");
-  //   deleteTask.setAttribute("id", `delete-${singleFood.taskId}`);
-  //   deleteTask.setAttribute("onclick", "handleDeleteTask(event)");
-  //   taskDueDate.setAttribute("class", "card-text due-date");
-
-  //   setStatus(taskCard, singleFood);
-}
-
-// Todo: create a function to handle deleting a task
+// Todo: create a function to handle deleting a food row
 function handleDeleteFood(event) {
   const deleteId = event.target.id.substring(7);
   const existingFood = JSON.parse(localStorage.getItem("parentFood"));
@@ -202,33 +167,7 @@ function handleDeleteFood(event) {
   });
 
   existingFood.splice(index, 1);
-  // delete existingTasks[index];
 
   localStorage.setItem("parentFood", JSON.stringify(existingFood));
   window.location.reload();
 }
-
-// Todo: create a function to handle dropping a task into a new status lane
-
-// //   ///Update Task after drag & drop
-// //   function updateFood(taskId, targetId) {
-// //     //find task that was moved
-// //     const existingFood = JSON.parse(localStorage.getItem("parentFood"));
-
-// //     for (const task of existingFood) {
-// //       //change state
-// //       if (task.taskId === taskId) {
-// //         console.log(targetId);
-// //         if (targetId === "inprogress-body") {
-// //           task.state = "inProgress";
-// //         } else if (targetId === "done-body") {
-// //       s    task.state = "done";
-// //         } else {
-// //           task.state = "todo";
-// //         }
-// //       }
-// //       //save update to local storage
-//       localStorage.setItem("parentFood", JSON.stringify(existingFood));
-//     }
-//   }
-// }

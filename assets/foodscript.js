@@ -61,6 +61,7 @@ const sortResult = lastFood.sort(function (a, b) {
 });
 
 const foodrecordContainer = document.getElementById ("record-container");
+const totalCalorieFood = document.getElementById("totalCalorieFood");
 // const dateGroup = document.querySelector(".date-group");
 // const foodLine = document.querySelector(".foodLines");
 
@@ -72,12 +73,13 @@ for (const singleFood of lastFood) {
   const calorieRecord = document.createElement("div");
   // const foodDate = document.createElement("div");
   const deleteFood = document.createElement("a");
+  const foodTotalRow = document.createElement ("div");
   foodRecord.textContent = singleFood.foodNameForm;
   calorieRecord.textContent = singleFood.foodCaloriesForm;
   // foodDateForm.textContent = singleFood.foodDateForm;
   // deleteFood.textContent = `Delete`;
 
-
+  totalCalorieFood.appendChild(foodTotalRow);
   foodrecordContainer.appendChild(dateGroup);
   dateGroup.appendChild(foodLine);
   foodLine.appendChild(foodRow);
@@ -85,10 +87,10 @@ for (const singleFood of lastFood) {
   foodRow.appendChild(calorieRecord);
   // foodRow.appendChild(deleteFood);
 
-  food 
   foodRow.setAttribute("class", "row food-row");
   foodRecord.setAttribute("class", "col s6 m6 l6 food-record");
   calorieRecord.setAttribute("class", "col s6 m6 l6 calorie-record");
+  foodTotalRow.setAttribute ("class","row foodTotalRow");
 
 
 // Todo: create a function to handle deleting a food row
@@ -104,3 +106,8 @@ function handleDeleteFood(event) {
   localStorage.setItem("parentFood", JSON.stringify(existingFood));
   window.location.reload();
 }};
+
+
+
+
+

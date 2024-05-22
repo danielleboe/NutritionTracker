@@ -30,14 +30,14 @@
       <button type="button" class="btn waves-effect waves-light modal-trigger" data-target="foodModal">Add Food</button>
     </div>   
 
-    <!-- Modal -->
+    <!--Food Modal -->
     <div id="foodModal" class="modal">
       <div class="modal-content">
         <h5>Add New Food</h5>
         <form id="myModal">
           <div class="input-field">
             <label for="datepicker">Date</label>
-            <input type="text" id="datepicker" name="due_date" class="validate"/>
+            <input type="text" id="datepicker" name="foodDate" class="validate"  class="datepicker"/>
           </div>
           <div class="input-field">
             <label for="foodItem">Food</label>
@@ -97,21 +97,83 @@
 
 
   <div><h3>Exercise Tracker</h3></div>
-  <a class="waves-effect waves-light btn">Add Workout</a>
 
-  <div class="container">
+  <div class="button-container">
+    <button type="button" class="btn waves-effect waves-light modal-trigger" data-target="exerciseModal">Add Exercise</button>
+  </div>   
+
+  <!-- Exercise Modal -->
+  <div id="exerciseModal" class="modal">
+    <div class="modal-content">
+      <h5>Add Workout</h5>
+      <form id="workoutModal">
+          <div class="input-field">
+          <label for="eDatepicker">Date</label>
+          <input type="text" id="eDatepicker" name="exerciseDate" class="validate" class="datepicker"/>
+        </div>
+        <div class="input-field">
+          <label for="exerciseItem">Exercise</label>
+          <input type="text" id="exerciseItem" name="exercise_item" class="validate"/>
+        </div>
+        <div class="input-field">
+          <label for="exerciseDuration">Duration</label>
+          <input type="number" id="exerciseDuration" name="exercise_duration" class="validate"/>
+        </div>
+        <div class="input-field">
+          <label for="exerciseCalories">Calories</label>
+          <input type="number" id="exerciseCalories" name="exercise_calories" class="validate"/>
+        </div>
+        <button type="submit" class="btn" id="submit-new-exercise">Save</button>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-close waves-effect waves-green btn-flat">Close</button>
+    </div>
+  </div>
+
+
+  <!-- <a class="waves-effect waves-light btn">Add Workout</a> -->
+
+  <!-- <div class="container">
     <div class="row">
       <div class="col s6 section"><h5>Exercise</h5></div>
       <div class="col s3 section"><h5>Duration</h5></div>
       <div class="col s3 section"><h5>Calories</h5></div>
     </div>
-    <!-- insert row via js -->
+     insert row via js
     <div class="row exercise-row">
       <div class="col s6">3 min jog</div>
       <div class="col s3">60 min</div>
       <div class="col s3">Calories</div>
-    </div>
+    </div> -->
     <!-- insert row via js -->
+
+    <!-- copy html -->
+    <div class="container">
+      <div class="row header">
+        <div class="col s4 section">
+          <h5>Exercise</h5>
+        </div>
+        <div class="col s4 section">
+          <h5>Duration</h5>
+        </div>
+        <div class="col s4 section">
+          <h5>Calories</h5>
+        </div>
+      </div>
+      <div id = "erecord-container">
+      <div class="date-group" >
+      <div class="col s12 m12 l12 date"> Date: May 20, 2024
+  
+      </div>
+
+  
+    </div>
+  </div>
+      <!-- Page Content goes here -->
+    </div>
+
+    <!-- end copy html -->
 
     <div class="row">
       <div class="col s4 offset-s6">
@@ -135,5 +197,6 @@
   <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="./assets/foodscript.js"></script>
+  <script src="./assets/exercisescript.js"></script>
 </body>
 </html>

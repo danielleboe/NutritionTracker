@@ -1,4 +1,4 @@
-const foodCaloriesInput = document.querySelector("#foodCalories");
+const calorieOutput = document.querySelector("#foodCalories");
 const foodNameInput = document.querySelector("#foodItem");
 const foodDateformInput = document.querySelector("#datepicker");
 const submitFood = document.querySelector("#myModal .btn");
@@ -13,7 +13,58 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
 
+  // async function logFood() {
+  //  const foodData = await fetch(`https://api.calorieninjas.com/v1/nutrition?query=${foodNameInput.value}`, {
+  //   headers: {
+  //       "X-Api-Key": "9ePZmGAr8Wxnfhl6F0/QLA==2j6IlOhiwEg4GjEk"
+  //  }
+
+  // });
+  //   const json = await foodData.json();
+  //   console.log(json);
+  // };
+
+
+  async function logFood() {
+    try {
+      const response = await fetch(`https://api.calorieninjas.com/v1/nutrition?query=${foodNameInput.value}`, {
+        headers: {
+          "X-Api-Key": "9ePZmGAr8Wxnfhl6F0/QLA==2j6IlOhiwEg4GjEk"
+        }
+      });
   
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+  
+      const data = await response.json();
+      console.log(data);
+  
+      if (data.items && data.items.length > 0) {
+        const calories = data.items[0].calories; // Assuming calories are in the first item
+        calorieOutput.value = calories; // Display the calorie value in the field
+      } else {
+        calorieOutput.value = "No data found"; // Handle case where no items are found
+      }
+    } catch (error) {
+      console.error("Error fetching food data:", error);
+      calorieOutput.value = "Error fetching data"; // Display error message in the field
+    }
+  }
+  
+  // Example usage: call logFood function when form is submitted or a button is clicked
+  const submitFoodButton = document.querySelector("#submit-new-food");
+  submitFoodButton.addEventListener("click", async (event) => {
+    event.preventDefault();
+    await logFood();
+  });
+
+  
+  // foodCaloriesInput
+
+
+  // items.calories
+
   function generateFoodId() {
     let myuuid = crypto.randomUUID();
     console.log(myuuid);
@@ -23,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
   submitFood.addEventListener("click", function(event) {
     event.preventDefault();
   
-    const foodCaloriesForm = foodCaloriesInput.value;
+    const foodCaloriesForm = calorieOutput.value;
     const foodNameForm = foodNameInput.value;
     const foodDateForm = foodDateformInput.value;
     const singleFood = {
@@ -79,7 +130,7 @@ for (const singleFood of lastFood) {
   // foodDateForm.textContent = singleFood.foodDateForm;
   // deleteFood.textContent = `Delete`;
 
-  totalCalorieFood.appendChild(foodTotalRow);
+  // totalCalorieFood.appendChild(foodTotalRow);
   foodrecordContainer.appendChild(dateGroup);
   dateGroup.appendChild(foodLine);
   foodLine.appendChild(foodRow);

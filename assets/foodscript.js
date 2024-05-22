@@ -1,7 +1,7 @@
 const calorieOutput = document.querySelector("#foodCalories");
 const foodNameInput = document.querySelector("#foodItem");
 const foodDateformInput = document.querySelector("#datepicker");
-const submitFood = document.querySelector("#myModal .btn");
+const submitFoodButton = document.querySelector("#submit-new-food");
 
 document.addEventListener('DOMContentLoaded', function() {
     const elems = document.querySelectorAll('.modal');
@@ -53,12 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Example usage: call logFood function when form is submitted or a button is clicked
-  const submitFoodButton = document.querySelector("#submit-new-food");
-  submitFoodButton.addEventListener("click", async (event) => {
-    event.preventDefault();
-    await logFood();
-  });
 
+  
   
   // foodCaloriesInput
 
@@ -71,8 +67,13 @@ document.addEventListener('DOMContentLoaded', function() {
     return myuuid;
   }
   
-  submitFood.addEventListener("click", function(event) {
+  submitFoodButton.addEventListener("click", async (event) => {
     event.preventDefault();
+    await logFood();
+  // });
+
+  // submitFoodButton.addEventListener("click", function(event) {
+  //   event.preventDefault();
   
     const foodCaloriesForm = calorieOutput.value;
     const foodNameForm = foodNameInput.value;

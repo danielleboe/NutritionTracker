@@ -1,7 +1,7 @@
-const calorieOutput = document.querySelector("#foodCalories");
+const exerciseCalorieOutput = document.querySelector("#foodCalories");
 const foodNameInput = document.querySelector("#foodItem");
 const foodDateformInput = document.querySelector("#datepicker");
-const submitFood = document.querySelector("#myModal .btn");
+const submitFoodButton = document.querySelector("#submit-new-food");
 
 document.addEventListener('DOMContentLoaded', function() {
     const elems = document.querySelectorAll('.modal');
@@ -11,19 +11,6 @@ document.addEventListener('DOMContentLoaded', function() {
   $(function() {
     $("#datepicker").datepicker();
   });
-  
-
-  // async function logFood() {
-  //  const foodData = await fetch(`https://api.calorieninjas.com/v1/nutrition?query=${foodNameInput.value}`, {
-  //   headers: {
-  //       "X-Api-Key": "9ePZmGAr8Wxnfhl6F0/QLA==2j6IlOhiwEg4GjEk"
-  //  }
-
-  // });
-  //   const json = await foodData.json();
-  //   console.log(json);
-  // };
-
 
   async function logFood() {
     try {
@@ -42,39 +29,31 @@ document.addEventListener('DOMContentLoaded', function() {
   
       if (data.items && data.items.length > 0) {
         const calories = data.items[0].calories; // Assuming calories are in the first item
-        calorieOutput.value = calories; // Display the calorie value in the field
+        exerciseCalorieOutput.value = calories; // Display the calorie value in the field
       } else {
-        calorieOutput.value = "No data found"; // Handle case where no items are found
+        exerciseCalorieOutput.value = "No data found"; // Handle case where no items are found
       }
     } catch (error) {
       console.error("Error fetching food data:", error);
-      calorieOutput.value = "Error fetching data"; // Display error message in the field
+      exerciseCalorieOutput.value = "Error fetching data"; // Display error message in the field
     }
   }
-  
-  // Example usage: call logFood function when form is submitted or a button is clicked
-  const submitFoodButton = document.querySelector("#submit-new-food");
-  submitFoodButton.addEventListener("click", async (event) => {
-    event.preventDefault();
-    await logFood();
-  });
 
-  
-  // foodCaloriesInput
-
-
-  // items.calories
-
-  function generateFoodId() {
+  function generateExerciseId() {
     let myuuid = crypto.randomUUID();
     console.log(myuuid);
     return myuuid;
   }
   
-  submitFood.addEventListener("click", function(event) {
+  submitFoodButton.addEventListener("click", async (event) => {
     event.preventDefault();
+    await logFood();
+  // });
+
+  // submitFoodButton.addEventListener("click", function(event) {
+  //   event.preventDefault();
   
-    const foodCaloriesForm = calorieOutput.value;
+    const foodCaloriesForm = exerciseCalorieOutput.value;
     const foodNameForm = foodNameInput.value;
     const foodDateForm = foodDateformInput.value;
     const singleFood = {
@@ -82,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
       foodNameForm: foodNameForm,
       foodDateForm: foodDateForm,
       dttm: new Date(),
-      foodId: generateFoodId()
+      foodId: generateExerciseId()
     }
     let parentFood = [];
     const existingFood = JSON.parse(localStorage.getItem("parentFood"));

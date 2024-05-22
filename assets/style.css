@@ -26,3 +26,9 @@ footer{
 table {
     width: 80%;
 }
+
+
+.datepicker-date-display{
+    display:none;
+
+}

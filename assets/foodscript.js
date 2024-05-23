@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  function generateExerciseId() {
+  function generateFoodId() {
     let myuuid = crypto.randomUUID();
     console.log(myuuid);
     return myuuid;
@@ -57,11 +57,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const foodNameForm = foodNameInput.value;
     const foodDateForm = foodDateformInput.value;
     const singleFood = {
-      foodCaloriesForm: foodCaloriesForm,
-      foodNameForm: foodNameForm,
       foodDateForm: foodDateForm,
+      foodNameForm: foodNameForm,
+      foodCaloriesForm: foodCaloriesForm,
       dttm: new Date(),
-      foodId: generateExerciseId()
+      foodId: generateFoodId()
     }
     let parentFood = [];
     const existingFood = JSON.parse(localStorage.getItem("parentFood"));
@@ -102,12 +102,12 @@ for (const singleFood of lastFood) {
   const foodRecord = document.createElement("div");
   const calorieRecord = document.createElement("div");
   // const foodDate = document.createElement("div");
-  const deleteFood = document.createElement("a");
+  const deleteFood = document.createElement("div");
   const foodTotalRow = document.createElement ("div");
   foodRecord.textContent = singleFood.foodNameForm;
   calorieRecord.textContent = singleFood.foodCaloriesForm;
   // foodDateForm.textContent = singleFood.foodDateForm;
-  // deleteFood.textContent = `Delete`;
+  deleteFood.textContent = `×`;
 
   // totalCalorieFood.appendChild(foodTotalRow);
   foodrecordContainer.appendChild(dateGroup);
@@ -115,12 +115,15 @@ for (const singleFood of lastFood) {
   foodLine.appendChild(foodRow);
   foodRow.appendChild(foodRecord);
   foodRow.appendChild(calorieRecord);
-  // foodRow.appendChild(deleteFood);
+  foodRow.appendChild(deleteFood);
 
   foodRow.setAttribute("class", "row food-row");
-  foodRecord.setAttribute("class", "col s6 m6 l6 food-record");
-  calorieRecord.setAttribute("class", "col s6 m6 l6 calorie-record");
+  foodRecord.setAttribute("class", "col s6 food-record");
+  calorieRecord.setAttribute("class", "col s5 calorie-record");
   foodTotalRow.setAttribute ("class","row foodTotalRow");
+  deleteFood.setAttribute("class","col s1 delete-record");
+  deleteFood.setAttribute("id", `delete-${singleFood.foodId}`);
+  deleteFood.setAttribute("onclick", "handleDeleteFood(event)")
 
 
 // Todo: create a function to handle deleting a food row
@@ -128,7 +131,7 @@ function handleDeleteFood(event) {
   const deleteId = event.target.id.substring(7);
   const existingFood = JSON.parse(localStorage.getItem("parentFood"));
   const index = existingFood.findIndex(function (task) {
-    return task.taskId === deleteId;
+    return task.foodId === deleteId;
   });
 
   existingFood.splice(index, 1);

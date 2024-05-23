@@ -84,12 +84,10 @@ submitexerciseButton.addEventListener("click", async (event) => {
   window.location.reload();
 });
 
-// old code
-
 const lastExercise = JSON.parse(localStorage.getItem("parentExercise"));
 
 // sort reverse chronological order
-const exerciseSortResult = lastExercise.sort(function (a, b) {
+const SortResult = lastExercise.sort(function (a, b) {
   return new Date(b.dttm) - new Date(a.dttm);
 });
 
@@ -131,6 +129,8 @@ for (const singleExercise of lastExercise) {
   deleteExercise.setAttribute("class","col s1 edelete-record");
   deleteExercise.setAttribute("id", `delete-${singleExercise.exerciseId}`);
   deleteExercise.setAttribute("onclick", "handleDeleteExercise(event)")
+  
+  
   // Todo: create a function to handle deleting a exercise row
   function handleDeleteExercise(event) {
     const deleteId = event.target.id.substring(7);

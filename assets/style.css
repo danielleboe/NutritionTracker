@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css');
 
+.brand-logo{
+    margin-left:10px;
+}
+
 main{
     text-align: center;
     justify-content: center;
@@ -19,16 +23,68 @@ main{
 
 }
 
-footer{
-    text-align: center;
+
+#modal-calorie{
+    display:none;
 }
 
-table {
-    width: 80%;
+#exercise-tracker-header{
+margin-top: 50px;
+}
+
+footer{
+    text-align: center;
 }
 
 
 .datepicker-date-display{
     display:none;
-
 }
+
+
+
+
+.datepicker-modal{
+    width: 10px;
+}
+
+.datepicker-day-button {
+    line-height: 25px;
+    width: 100%;
+  }
+
+
+
+  .datepicker-table {
+    width: 200px;
+    font-size: 1rem;
+    margin: 0 auto;
+  }
+
+  .datepicker-calendar{
+    width:200px;
+  }
+/* .modal-content .datepicker-container{
+    width:20px;
+    margin:0;
+} */
+
+  .datepicker-controls {
+    width: 200px;
+    margin: 0 auto;
+  }
+
+  .datepicker-modal{
+    width:200px;
+  }
+
+  .datepicker-footer{
+    width: 200px;
+    margin:0;
+  }
+
+  .datepicker-clear{
+    width:0;
+  padding: 0;
+}
+  

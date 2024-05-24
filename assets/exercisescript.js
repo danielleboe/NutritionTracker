@@ -17,7 +17,7 @@ $(function () {
 async function logExercise() {
   try {
     const response = await fetch(
-      `https://api.api-ninjas.com/v1/caloriesburned?activity=${exerciseNameInput.value}&duration${exerciseDuratonInput.value}&limit=1`,
+      `https://api.api-ninjas.com/v1/caloriesburned?activity=${exerciseNameInput.value}&limit=1`,
       {
         headers: {
           "X-Api-Key": "9ePZmGAr8Wxnfhl6F0/QLA==Zz94qcLvKzE7uHK0",
@@ -78,7 +78,7 @@ let parentExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
 parentExercise.push(singleExercise);
 localStorage.setItem("parentExercise", JSON.stringify(parentExercise));
  
-  updateTotalCalories();
+  updateTotalExerciseCalories();
 
   const formModal = document.getElementById("workoutModal");
   formModal.reset();
@@ -87,28 +87,28 @@ localStorage.setItem("parentExercise", JSON.stringify(parentExercise));
   window.location.reload();
 });
 
-function updateTotalCalories() {
+function updateTotalExerciseCalories() {
   const existingExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
-  let totalCalories = 0;
+  let totalExerciseCalories = 0;
 
   if (existingExercise.length > 0) {
     for (let i = 0; i < existingExercise.length; i++) {
-      totalCalories += parseInt(existingExercise[i].exerciseCaloriesForm, 10);
+      totalExerciseCalories += parseInt(existingExercise[i].exerciseCaloriesForm, 10);
     }
   }
 
-  console.log(`Total calories: ${totalCalories}`);
+  console.log(`Total calories: ${totalExerciseCalories}`);
   totalCalorieBurned.innerHTML = ''; // Clear previous total
   const totalCaloriesDiv = document.createElement("div");
   const totalCalorieLine = document.createElement("p");
-  totalCalorieLine.innerText = `Total Calories Burned: ${totalCalories}`;
+  totalCalorieLine.innerText = `Total Calories Burned: ${totalExerciseCalories}`;
   totalCaloriesDiv.appendChild(totalCalorieLine);
   totalCaloriesDiv.setAttribute("class", "row");
   totalCalorieBurned.appendChild(totalCaloriesDiv);
 }
 
 // Initial call to display total calories when the page loads
-updateTotalCalories();
+updateTotalExerciseCalories();
 
 const lastExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
 
@@ -161,7 +161,7 @@ for (const singleExercise of lastExercise) {
     existingExercise.splice(index, 1);
 
     localStorage.setItem("parentExercise", JSON.stringify(existingExercise));
-    updateTotalCalories(); // Update total calories after deletion
+    updateTotalExerciseCalories(); // Update total calories after deletion
     window.location.reload();
   }
 }

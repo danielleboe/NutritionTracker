@@ -66,7 +66,7 @@ submitExerciseButton.addEventListener("click", async (event) => {
   parentExercise.push(singleExercise);
   localStorage.setItem("parentExercise", JSON.stringify(parentExercise));
 
-  updateTotalCalories();
+  updateTotalExerciseCalories();
 
   const formModal = document.getElementById("myModal");
   formModal.reset();
@@ -75,7 +75,7 @@ submitExerciseButton.addEventListener("click", async (event) => {
   window.location.reload();s
 });
 
-function updateTotalCalories() {
+function updateTotalExerciseCalories() {
   const existingExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
   let totalCalories = 0;
 
@@ -97,7 +97,7 @@ function updateTotalCalories() {
 }
 
 // Initial call to display total calories when the page loads
-updateTotalCalories();
+updateTotalExerciseCalories();
 
 // Existing code to display exercise records
 const lastExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
@@ -142,6 +142,6 @@ function handledeleteExercise(event) {
   existingexercise.splice(index, 1);
 
   localStorage.setItem("parentExercise", JSON.stringify(existingexercise));
-  updateTotalCalories(); // Update total calories after deletion
+  updateTotalExerciseCalories(); // Update total calories after deletion
   window.location.reload();
 }

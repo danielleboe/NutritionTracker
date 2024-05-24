@@ -1,4 +1,4 @@
-const exerciseCalorieOutput = document.querySelector("#foodCalories");
+const foodCalorieOutput = document.querySelector("#foodCalories");
 const foodNameInput = document.querySelector("#foodItem");
 const foodDateformInput = document.querySelector("#datepicker");
 const submitFoodButton = document.querySelector("#submit-new-food");
@@ -33,13 +33,13 @@ async function logFood() {
 
     if (data.items && data.items.length > 0) {
       const calories = data.items[0].calories; // Assuming calories are in the first item
-      exerciseCalorieOutput.value = calories; // Display the calorie value in the field
+      foodCalorieOutput.value = calories; // Display the calorie value in the field
     } else {
-      exerciseCalorieOutput.value = "No data found"; // Handle case where no items are found
+      foodCalorieOutput.value = "No data found"; // Handle case where no items are found
     }
   } catch (error) {
     console.error("Error fetching food data:", error);
-    exerciseCalorieOutput.value = "Error fetching data"; // Display error message in the field
+    foodCalorieOutput.value = "Error fetching data"; // Display error message in the field
   }
 }
 
@@ -51,7 +51,7 @@ submitFoodButton.addEventListener("click", async (event) => {
   event.preventDefault();
   await logFood();
 
-  const foodCaloriesForm = exerciseCalorieOutput.value;
+  const foodCaloriesForm = foodCalorieOutput.value;
   const foodNameForm = foodNameInput.value;
   const foodDateForm = foodDateformInput.value;
   const singleFood = {
@@ -72,7 +72,7 @@ submitFoodButton.addEventListener("click", async (event) => {
   formModal.reset();
   const instance = M.Modal.getInstance(document.getElementById("foodModal"));
   instance.close();
-  window.location.reload();s
+  window.location.reload();
 });
 
 function updateTotalCalories() {
@@ -86,11 +86,10 @@ function updateTotalCalories() {
   }
 
   console.log(`Total calories: ${totalCalories}`);
-  totalCalorieFood.innerHTML = ''; // Clear previous total
-
+  totalCalorieFood.innerHTML = ""; // Clear previous total
   const totalCaloriesDiv = document.createElement("div");
   const totalCalorieLine = document.createElement("p");
-  totalCalorieLine.innerText = `Total Calories: ${totalCalories}`;
+  totalCalorieLine.innerText = `Total Calories Eaten: ${totalCalories}`;
   totalCaloriesDiv.appendChild(totalCalorieLine);
   totalCaloriesDiv.setAttribute("class", "row");
   totalCalorieFood.appendChild(totalCaloriesDiv);
@@ -117,7 +116,7 @@ for (const singleFood of lastFood) {
 
   foodRecord.textContent = singleFood.foodNameForm;
   calorieRecord.textContent = singleFood.foodCaloriesForm;
-  deleteFood.textContent = '×';
+  deleteFood.textContent = "×";
 
   foodrecordContainer.appendChild(dateGroup);
   dateGroup.appendChild(foodLine);

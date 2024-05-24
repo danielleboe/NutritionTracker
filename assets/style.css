@@ -53,8 +53,6 @@ footer{
     width: 100%;
   }
 
-
-
   .datepicker-table {
     width: 200px;
     font-size: 1rem;
@@ -64,10 +62,6 @@ footer{
   .datepicker-calendar{
     width:300px;
   }
-/* .modal-content .datepicker-container{
-    width:20px;
-    margin:0;
-} */
 
   .datepicker-controls {
     width: 200px;

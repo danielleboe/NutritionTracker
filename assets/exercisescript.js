@@ -1,12 +1,13 @@
-const calorieOutput = document.querySelector("#exerciseCalories");
+const exerciseCalorieOutput = document.querySelector("#exerciseCalories");
 const exerciseNameInput = document.querySelector("#exerciseItem");
 const exerciseDuratonInput = document.querySelector("#exerciseDuration");
 const exerciseDateformInput = document.querySelector("#eDatepicker");
-const submitexerciseButton = document.querySelector("#submit-new-exercise");
+const totalCalorieBurned = document.getElementById("totalCalorieBurned");
+const submitExerciseButton = document.querySelector("#submit-new-exercise");
 
 document.addEventListener("DOMContentLoaded", function () {
   const elems = document.querySelectorAll(".modal");
-  const instances = M.Modal.init(elems);
+  M.Modal.init(elems);
 });
 
 $(function () {
@@ -16,7 +17,7 @@ $(function () {
 async function logExercise() {
   try {
     const response = await fetch(
-      `https://api.api-ninjas.com/v1/caloriesburned?activity=${excerciseNameInput.value}&duration${exerciseDuratonInput.value}&limit=1`,
+      `https://api.api-ninjas.com/v1/caloriesburned?activity=${exerciseNameInput.value}&duration${exerciseDuratonInput.value}&limit=1`,
       {
         headers: {
           "X-Api-Key": "9ePZmGAr8Wxnfhl6F0/QLA==Zz94qcLvKzE7uHK0",
@@ -32,7 +33,7 @@ async function logExercise() {
     console.log(data);
 
     if (data && data.length > 0) {
-      const calories = data[0].calories_burned; // Assuming calories are in the first item
+      const calories = data[0].total_calories; // Assuming calories are in the first item
       exerciseCalorieOutput.value = calories; // Display the calorie value in the field
     } else {
       exerciseCalorieOutput.value = "No data found"; // Handle case where no items are found
@@ -44,19 +45,18 @@ async function logExercise() {
 }
 
 function generateExerciseId() {
-  let myuuid = crypto.randomUUID();
-  console.log(myuuid);
-  return myuuid;
+  return crypto.randomUUID();
 }
 
-submitexerciseButton.addEventListener("click", async (event) => {
+submitExerciseButton.addEventListener("click", async (event) => {
   event.preventDefault();
   await logExercise();
 
-  const exerciseCaloriesForm = exerciseCalorieOutput.value;
-  const exerciseNameForm = exerciseNameInput.value;
   const exerciseDateForm = exerciseDateformInput.value;
+  const exerciseNameForm = exerciseNameInput.value;
   const exerciseDurationForm = exerciseDuratonInput.value;
+  const exerciseCaloriesForm = exerciseCalorieOutput.value;
+
   const singleExercise = {
     exerciseCaloriesForm: exerciseCaloriesForm,
     exerciseDurationForm: exerciseDurationForm,
@@ -65,36 +65,59 @@ submitexerciseButton.addEventListener("click", async (event) => {
     dttm: new Date(),
     exerciseId: generateExerciseId(),
   };
-  let parentExercise = [];
-  const existingExercise = JSON.parse(localStorage.getItem("parentExercise"));
 
-  if (existingExercise !== null) {
-    parentExercise = existingExercise;
-  }
+  // let parentExercise = [];
+  // const existingExercise = JSON.parse(localStorage.getItem("parentExercise"));
 
-  parentExercise.push(singleExercise);
-  localStorage.setItem("parentExercise", JSON.stringify(parentExercise));
+  // if (existingExercise !== null) {
+  //   parentExercise = existingExercise;
+  // }
+
+//new code start
+let parentExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
+parentExercise.push(singleExercise);
+localStorage.setItem("parentExercise", JSON.stringify(parentExercise));
+ 
+  updateTotalCalories();
 
   const formModal = document.getElementById("workoutModal");
   formModal.reset();
-  const instance = M.Modal.getInstance(
-    document.getElementById("exerciseModal")
-  );
+  const instance = M.Modal.getInstance(document.getElementById("exerciseModal"));
   instance.close();
   window.location.reload();
 });
 
-const lastExercise = JSON.parse(localStorage.getItem("parentExercise"));
+function updateTotalCalories() {
+  const existingExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
+  let totalCalories = 0;
+
+  if (existingExercise.length > 0) {
+    for (let i = 0; i < existingExercise.length; i++) {
+      totalCalories += parseInt(existingExercise[i].exerciseCaloriesForm, 10);
+    }
+  }
+
+  console.log(`Total calories: ${totalCalories}`);
+  totalCalorieBurned.innerHTML = ''; // Clear previous total
+  const totalCaloriesDiv = document.createElement("div");
+  const totalCalorieLine = document.createElement("p");
+  totalCalorieLine.innerText = `Total Calories Burned: ${totalCalories}`;
+  totalCaloriesDiv.appendChild(totalCalorieLine);
+  totalCaloriesDiv.setAttribute("class", "row");
+  totalCalorieBurned.appendChild(totalCaloriesDiv);
+}
+
+// Initial call to display total calories when the page loads
+updateTotalCalories();
+
+const lastExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
 
 // sort reverse chronological order
-const SortResult = lastExercise.sort(function (a, b) {
+const sortResults = lastExercise.sort(function (a, b) {
   return new Date(b.dttm) - new Date(a.dttm);
 });
 
 const exerciseRecordContainer = document.getElementById("erecord-container");
-const totalCaloriesExercise = document.getElementById("totalCalorieexercise");
-// const dateGroup = document.querySelector(".date-group");
-// const exerciseLine = document.querySelector(".exerciseLines");
 
 for (const singleExercise of lastExercise) {
   const eDateGroup = document.createElement("div");
@@ -102,46 +125,43 @@ for (const singleExercise of lastExercise) {
   const exerciseRow = document.createElement("div");
   const exerciseRecord = document.createElement("div");
   const exerciseDuration = document.createElement("div");
-  const calorieRecord = document.createElement("div");
-  // const exerciseDate = document.createElement("div");
+  const exerciseCalorieRecord = document.createElement("div");
   const deleteExercise = document.createElement("div");
   const exerciseTotalRow = document.createElement("div");
+
   exerciseRecord.textContent = singleExercise.exerciseNameForm;
+  exerciseCalorieRecord.textContent = singleExercise.exerciseCaloriesForm;
   exerciseDuration.textContent = singleExercise.exerciseDurationForm;
-  calorieRecord.textContent = singleExercise.exerciseCaloriesForm;
-  // exerciseDateForm.textContent = singleExercise.exerciseDateForm;
   deleteExercise.textContent = `×`;
 
-  // totalCalorieexercise.appendChild(exerciseTotalRow);
   exerciseRecordContainer.appendChild(eDateGroup);
   eDateGroup.appendChild(exerciseLine);
   exerciseLine.appendChild(exerciseRow);
   exerciseRow.appendChild(exerciseRecord);
   exerciseRow.appendChild(exerciseDuration);
-  exerciseRow.appendChild(calorieRecord);
+  exerciseRow.appendChild(exerciseCalorieRecord);
   exerciseRow.appendChild(deleteExercise);
 
   exerciseRow.setAttribute("class", "row exercise-row");
   exerciseRecord.setAttribute("class", "col s4 exercise-record");
   exerciseDuration.setAttribute("class", "col s3 section");
-  calorieRecord.setAttribute("class", "col s4 ecalorie-record");
-  exerciseTotalRow.setAttribute("class", "row exerciseTotalRow");
+  exerciseCalorieRecord.setAttribute("class", "col s4 calorie-record");
   deleteExercise.setAttribute("class","col s1 edelete-record");
   deleteExercise.setAttribute("id", `delete-${singleExercise.exerciseId}`);
   deleteExercise.setAttribute("onclick", "handleDeleteExercise(event)")
+  exerciseTotalRow.setAttribute("class", "row exerciseTotalRow");
   
   
   // Todo: create a function to handle deleting a exercise row
   function handleDeleteExercise(event) {
     const deleteId = event.target.id.substring(7);
     const existingExercise = JSON.parse(localStorage.getItem("parentExercise"));
-    const index = existingExercise.findIndex(function (task) {
-      return task.exerciseId === deleteId;
-    });
+    const index = existingExercise.findIndex((task) => task.exerciseId === deleteId);
 
     existingExercise.splice(index, 1);
 
     localStorage.setItem("parentExercise", JSON.stringify(existingExercise));
+    updateTotalCalories(); // Update total calories after deletion
     window.location.reload();
   }
 }

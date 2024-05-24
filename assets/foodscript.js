@@ -66,7 +66,7 @@ submitFoodButton.addEventListener("click", async (event) => {
   parentFood.push(singleFood);
   localStorage.setItem("parentFood", JSON.stringify(parentFood));
 
-  updateTotalCalories();
+  updateTotalExerciseCalories();
 
   const formModal = document.getElementById("myModal");
   formModal.reset();
@@ -75,7 +75,7 @@ submitFoodButton.addEventListener("click", async (event) => {
   window.location.reload();
 });
 
-function updateTotalCalories() {
+function updateTotalExerciseCalories() {
   const existingFood = JSON.parse(localStorage.getItem("parentFood")) || [];
   let totalCalories = 0;
 
@@ -96,7 +96,7 @@ function updateTotalCalories() {
 }
 
 // Initial call to display total calories when the page loads
-updateTotalCalories();
+updateTotalExerciseCalories();
 
 // Existing code to display food records
 const lastFood = JSON.parse(localStorage.getItem("parentFood")) || [];
@@ -141,6 +141,6 @@ function handleDeleteFood(event) {
   existingFood.splice(index, 1);
 
   localStorage.setItem("parentFood", JSON.stringify(existingFood));
-  updateTotalCalories(); // Update total calories after deletion
+  updateTotalExerciseCalories(); // Update total calories after deletion
   window.location.reload();
 }

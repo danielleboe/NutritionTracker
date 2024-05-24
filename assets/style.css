@@ -54,7 +54,7 @@ footer{
   }
 
   .datepicker-table {
-    width: 200px;
+    width: 300px;
     font-size: 1rem;
     margin: 0 auto;
   }
@@ -64,7 +64,7 @@ footer{
   }
 
   .datepicker-controls {
-    width: 200px;
+    width: 300px;
     margin: 0 auto;
   }
 
@@ -73,7 +73,7 @@ footer{
   }
 
   .datepicker-footer{
-    width: 200px;
+    width: 300px;
     margin:0;
   }
 

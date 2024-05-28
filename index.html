@@ -1,124 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"/>
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
-  <title>Nutrition Tracker</title>
-  <link rel="stylesheet" href="./assets/style.css" />
-</head>
-<body>
-  <nav>
-    <div class="nav-wrapper">
-      <a href="./index.html" class="brand-logo">CalorEase</a>
-      <!-- <ul id="nav-mobile" class="right hide-on-med-and-down">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css"
+    />
+    <title>Nutrition Tracker</title>
+    <link rel="stylesheet" href="./assets/style.css" />
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="./index.html" class="brand-logo">CalorEase</a>
+        <!-- <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="sass.html">Sass</a></li>
         <li><a href="badges.html">Components</a></li>
         <li><a href="collapsible.html">JavaScript</a></li>
       </ul> -->
-    </div>
-  </nav>
-  <main>
-    <h1>Caloric Tracker</h1>
-  </main>
-  <div class="content">
-    <div class="date-selector"><input type="date" class="datepicker">
-    </div>
-    <div><h3>Food Tracker</h3></div>
-    <div class="button-container">
-      <button type="button" class="btn waves-effect waves-light modal-trigger" data-target="foodModal">Add Food</button>
-    </div>   
+      </div>
+    </nav>
+    <main>
+      <h1>Caloric Tracker</h1>
+    </main>
+    <div class="content">
+      <div class="date-selector"><input type="date" class="datepicker" /></div>
+      <div><h3>Food Tracker</h3></div>
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn waves-effect waves-light modal-trigger"
+          data-target="foodModal"
+        >
+          Add Food
+        </button>
+      </div>
 
-    <!--Food Modal -->
-    <div id="foodModal" class="modal">
-      <div class="modal-content">
-        <h5>Add New Food</h5>
-        <form id="myModal">
-          <div class="input-field">
-            <label for="datepicker">Date</label>
-            <input type="text" id="datepicker" name="foodDate" class="validate"  class="datepicker"/>
+      <!--Food Modal -->
+      <div id="foodModal" class="modal">
+        <div class="modal-content">
+          <h5>Add New Food</h5>
+          <form id="myModal">
+            <div class="input-field">
+              <label for="datepicker">Date</label>
+              <input
+                type="text"
+                id="datepicker"
+                name="foodDate"
+                class="validate"
+                class="datepicker"
+              />
+            </div>
+            <div class="input-field">
+              <label for="foodItem">Food</label>
+              <input
+                type="text"
+                id="foodItem"
+                name="food_item"
+                class="validate"
+              />
+            </div>
+            <div class="input-field" id="modal-calorie">
+              <label for="foodCalories">Calories</label>
+              <input
+                type="number"
+                id="foodCalories"
+                name="food_calories"
+                class="validate"
+              />
+            </div>
+            <button type="submit" class="btn" id="submit-new-food">Save</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-close waves-effect waves-green btn-flat">
+            Close
+          </button>
+        </div>
+      </div>
+      <!-- <a class="waves-effect waves-light btn">Add Food</a> -->
+      <div class="container" id="food-container">
+        <div class="row header">
+          <div class="col s6 section">
+            <h5>Food Item</h5>
           </div>
-          <div class="input-field">
-            <label for="foodItem">Food</label>
-            <input type="text" id="foodItem" name="food_item" class="validate"/>
+          <div class="col s5 section">
+            <h5>Calories</h5>
           </div>
-          <div class="input-field" id="modal-calorie">
-            <label for="foodCalories">Calories</label>
-            <input type="number" id="foodCalories" name="food_calories" class="validate"/>
+        </div>
+        <div id="record-container">
+          <div class="date-group">
+            <div class="row" id="daily-food-records"></div>
+            <div class="row">
+              <div class="col s4 offset-s6" id="totalCalorieFood"></div>
+            </div>
           </div>
-          <button type="submit" class="btn" id="submit-new-food">Save</button>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button class="modal-close waves-effect waves-green btn-flat">Close</button>
-      </div>
-    </div>
- <!-- <a class="waves-effect waves-light btn">Add Food</a> -->
- <div class="container" id="food-container">
-    <div class="row header">
-      <div class="col s6 m6 l6 section">
-        <h5>Food Item</h5>
-      </div>
-      <div class="col s6 m6 l5 section">
-        <h5>Calories</h5>
-      </div>
-    </div>
-    <div id = "record-container">
-    <div class="date-group" >
-  <div class="row" id="daily-food-records">
-    </div>
-    <div class="row">
-    <div class="col s4 offset-s6" id="totalCalorieFood">
-    </div>
-  </div>
-  </div>
-</div>
-    <!-- Page Content goes here -->
-  </div>
-
-
-  <div><h3 id="exercise-tracker-header">Exercise Tracker</h3></div>
-
-  <div class="button-container">
-    <button type="button" class="btn waves-effect waves-light modal-trigger" data-target="exerciseModal">Add Exercise</button>
-  </div>   
-
-  <!-- Exercise Modal -->
-  <div id="exerciseModal" class="modal">
-    <div class="modal-content">
-      <h5>Add Workout</h5>
-      <form id="workoutModal">
-          <div class="input-field">
-          <label for="eDatepicker">Date</label>
-          <input type="text" id="eDatepicker" name="exerciseDate" class="validate" class="datepicker"/>
         </div>
-        <div class="input-field">
-          <label for="exerciseItem">Exercise</label>
-          <input type="text" id="exerciseItem" name="exercise_item" class="validate"/>
-        </div>
-        <div class="input-field">
-          <label for="exerciseDuration">Duration</label>
-          <input type="number" id="exerciseDuration" name="exercise_duration" class="validate"/>
-        </div>
-        <div class="input-field">
-          <label for="exerciseCalories">Calories</label>
-          <input type="number" id="exerciseCalories" name="exercise_calories" class="validate"/>
-        </div>
-        <button type="submit" class="btn" id="submit-new-exercise">Save</button>
-      </form>
-    </div>
-    <div class="modal-footer">
-      <button class="modal-close waves-effect waves-green btn-flat">Close</button>
-    </div>
-  </div>
+        <!-- Page Content goes here -->
+      </div>
 
+      <div><h3 id="exercise-tracker-header">Exercise Tracker</h3></div>
 
-  <!-- <a class="waves-effect waves-light btn">Add Workout</a> -->
+      <div class="button-container">
+        <button
+          type="button"
+          class="btn waves-effect waves-light modal-trigger"
+          data-target="exerciseModal"
+        >
+          Add Exercise
+        </button>
+      </div>
 
-  <!-- <div class="container">
+      <!-- Exercise Modal -->
+      <div id="exerciseModal" class="modal">
+        <div class="modal-content">
+          <h5>Add Workout</h5>
+          <form id="workoutModal">
+            <div class="input-field">
+              <label for="eDatepicker">Date</label>
+              <input
+                type="text"
+                id="eDatepicker"
+                name="exerciseDate"
+                class="validate"
+                class="datepicker"
+              />
+            </div>
+            <div class="input-field">
+              <label for="exerciseItem">Exercise</label>
+              <input
+                type="text"
+                id="exerciseItem"
+                name="exercise_item"
+                class="validate"
+              />
+            </div>
+            <div class="input-field">
+              <label for="exerciseDuration">Duration</label>
+              <input
+                type="number"
+                id="exerciseDuration"
+                name="exercise_duration"
+                class="validate"
+              />
+            </div>
+            <div class="input-field">
+              <label for="exerciseCalories">Calories</label>
+              <input
+                type="number"
+                id="exerciseCalories"
+                name="exercise_calories"
+                class="validate"
+              />
+            </div>
+            <button type="submit" class="btn" id="submit-new-exercise">
+              Save
+            </button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-close waves-effect waves-green btn-flat">
+            Close
+          </button>
+        </div>
+      </div>
+
+      <!-- <a class="waves-effect waves-light btn">Add Workout</a> -->
+
+      <!-- <div class="container">
     <div class="row">
       <div class="col s6 section"><h5>Exercise</h5></div>
       <div class="col s3 section"><h5>Duration</h5></div>
@@ -130,59 +189,59 @@
       <div class="col s3">60 min</div>
       <div class="col s3">Calories</div>
     </div> -->
-    <!-- insert row via js -->
+      <!-- insert row via js -->
 
-    <!-- copy html -->
-    <div class="container">
-      <div class="row header">
-        <div class="col s4 section">
-          <h5>Exercise</h5>
-        </div>
-        <div class="col s3 section">
-          <h5>Duration</h5>
-        </div>
-        <div class="col s4 section">
-          <h5>Calories</h5>
-          <div class="col s1 section">
-            <h5></h5>
-        </div>
-      </div>
-      <div id = "erecord-container">
-      <!-- <div class="date-group" >
+      <!-- copy html -->
+      <div class="container">
+        <div class="row header">
+          <div class="col s4 section">
+            <h5>Exercise</h5>
+          </div>
+          <div class="col s3 section">
+            <h5>Duration</h5>
+          </div>
+          <div class="col s4 section">
+            <h5>Calories</h5>
+            <div class="col s1 section">
+              <h5></h5>
+            </div>
+          </div>
+          <div id="erecord-container">
+            <!-- <div class="date-group" >
       <div class="col s12 m12 l12 date"> Date: May 20, 2024
   
       </div>
 
   
     </div> -->
-  </div>
-      <!-- Page Content goes here -->
-    </div>
+          </div>
+          <!-- Page Content goes here -->
+        </div>
 
-    <!-- end copy html -->
+        <!-- end copy html -->
 
-    <div class="row">
-      <div class="col s4 offset-s6" id="totalCalorieBurned">
-        <!-- <span class="flow-text">Total Calories Burned</span> -->
+        <div class="row">
+          <div class="col s4 offset-s6" id="totalCalorieBurned">
+            <!-- <span class="flow-text">Total Calories Burned</span> -->
+          </div>
+          <!-- <div class="col s2"><span class="flow-text">2345</span></div> -->
+        </div>
+
+        <div class="row">
+          <div class="col s4 offset-s6">
+            <span class="flow-text">Total Daily Calories</span>
+          </div>
+          <div class="col s2"><span class="flow-text">12355</span></div>
+        </div>
       </div>
-      <!-- <div class="col s2"><span class="flow-text">2345</span></div> -->
     </div>
 
-    <div class="row">
-      <div class="col s4 offset-s6">
-        <span class="flow-text">Total Daily Calories</span>
-      </div>
-      <div class="col s2"><span class="flow-text">12355</span></div>
-    </div>
-  </div>
-
-  </div>
-
-  <footer>Footer</footer>
-  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-  <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="./assets/foodscript.js"></script>
-  <script src="./assets/exercisescript.js"></script>
-</body>
+    <footer>Footer</footer>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./assets/exercisescript.js"></script>
+    <script src="./assets/foodscript.js"></script>
+    <script src="./assets/dailyscript.js"></script>
+  </body>
 </html>

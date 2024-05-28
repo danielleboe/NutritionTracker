@@ -66,19 +66,12 @@ submitExerciseButton.addEventListener("click", async (event) => {
     exerciseId: generateExerciseId(),
   };
 
-  // let parentExercise = [];
-  // const existingExercise = JSON.parse(localStorage.getItem("parentExercise"));
-
-  // if (existingExercise !== null) {
-  //   parentExercise = existingExercise;
-  // }
-
 //new code start
 let parentExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
 parentExercise.push(singleExercise);
 localStorage.setItem("parentExercise", JSON.stringify(parentExercise));
  
-  updateTotalExerciseCalories();
+  updateTotalFoodCalories();
 
   const formModal = document.getElementById("workoutModal");
   formModal.reset();
@@ -87,7 +80,7 @@ localStorage.setItem("parentExercise", JSON.stringify(parentExercise));
   window.location.reload();
 });
 
-function updateTotalExerciseCalories() {
+function updateTotalFoodCalories() {
   const existingExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
   let totalExerciseCalories = 0;
 
@@ -96,11 +89,6 @@ function updateTotalExerciseCalories() {
       totalExerciseCalories += parseInt(existingExercise[i].exerciseCaloriesForm, 10);
     }
   }
-
-
-
-
-
   
   console.log(`Total calories: ${totalExerciseCalories}`);
   totalCalorieBurned.innerHTML = ''; // Clear previous total
@@ -113,7 +101,7 @@ function updateTotalExerciseCalories() {
 }
 
 // Initial call to display total calories when the page loads
-updateTotalExerciseCalories();
+updateTotalFoodCalories();
 
 const lastExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
 
@@ -166,7 +154,7 @@ for (const singleExercise of lastExercise) {
     existingExercise.splice(index, 1);
 
     localStorage.setItem("parentExercise", JSON.stringify(existingExercise));
-    updateTotalExerciseCalories(); // Update total calories after deletion
+    updateTotalFoodCalories(); // Update total calories after deletion
     window.location.reload();
   }
 }

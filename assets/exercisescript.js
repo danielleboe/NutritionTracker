@@ -97,10 +97,15 @@ function updateTotalExerciseCalories() {
     }
   }
 
+
+
+
+
+  
   console.log(`Total calories: ${totalExerciseCalories}`);
   totalCalorieBurned.innerHTML = ''; // Clear previous total
   const totalCaloriesDiv = document.createElement("div");
-  const totalCalorieLine = document.createElement("p");
+  const totalCalorieLine = document.createElement("h6");
   totalCalorieLine.innerText = `Total Calories Burned: ${totalExerciseCalories}`;
   totalCaloriesDiv.appendChild(totalCalorieLine);
   totalCaloriesDiv.setAttribute("class", "row");

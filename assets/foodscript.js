@@ -3,6 +3,7 @@ const foodNameInput = document.querySelector("#foodItem");
 const foodDateformInput = document.querySelector("#datepicker");
 const submitFoodButton = document.querySelector("#submit-new-food");
 const totalCalorieFood = document.getElementById("totalCalorieFood");
+const dailyFoodRecords = document.getElementById("daily-food-records")
 
 document.addEventListener("DOMContentLoaded", function () {
   const elems = document.querySelectorAll(".modal");
@@ -16,7 +17,7 @@ $(function () {
 async function logFood() {
   try {
     const response = await fetch(
-      `https://api.calorieninjas.com/v1/nutrition?query=${foodNameInput.value}`,
+      `https://api.calorieninjgias.com/v1/nutrition?query=${foodNameInput.value}`,
       {
         headers: {
           "X-Api-Key": "9ePZmGAr8Wxnfhl6F0/QLA==2j6IlOhiwEg4GjEk",
@@ -88,7 +89,7 @@ function updateTotalExerciseCalories() {
   console.log(`Total calories: ${totalCalories}`);
   totalCalorieFood.innerHTML = ""; // Clear previous total
   const totalCaloriesDiv = document.createElement("div");
-  const totalCalorieLine = document.createElement("p");
+  const totalCalorieLine = document.createElement("h6");
   totalCalorieLine.innerText = `Total Calories Eaten: ${totalCalories}`;
   totalCaloriesDiv.appendChild(totalCalorieLine);
   totalCaloriesDiv.setAttribute("class", "row");
@@ -104,7 +105,7 @@ const lastFood = JSON.parse(localStorage.getItem("parentFood")) || [];
 // Sort reverse chronological order
 const sortResult = lastFood.sort((a, b) => new Date(b.dttm) - new Date(a.dttm));
 
-const foodrecordContainer = document.getElementById("record-container");
+const foodrecordContainer = document.getElementById("daily-food-records");
 
 for (const singleFood of lastFood) {
   const dateGroup = document.createElement("div");

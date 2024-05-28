@@ -3,7 +3,7 @@ const foodNameInput = document.querySelector("#foodItem");
 const foodDateformInput = document.querySelector("#datepicker");
 const submitFoodButton = document.querySelector("#submit-new-food");
 const totalCalorieFood = document.getElementById("totalCalorieFood");
-const dailyFoodRecords = document.getElementById("daily-food-records")
+const dailyFoodRecords = document.getElementById("daily-food-records");
 
 document.addEventListener("DOMContentLoaded", function () {
   const elems = document.querySelectorAll(".modal");
@@ -17,7 +17,7 @@ $(function () {
 async function logFood() {
   try {
     const response = await fetch(
-      `https://api.calorieninjgias.com/v1/nutrition?query=${foodNameInput.value}`,
+      `https://api.calorieninjas.com/v1/nutrition?query=${foodNameInput.value}`,
       {
         headers: {
           "X-Api-Key": "9ePZmGAr8Wxnfhl6F0/QLA==2j6IlOhiwEg4GjEk",
@@ -51,7 +51,6 @@ function generateFoodId() {
 submitFoodButton.addEventListener("click", async (event) => {
   event.preventDefault();
   await logFood();
-
   const foodCaloriesForm = foodCalorieOutput.value;
   const foodNameForm = foodNameInput.value;
   const foodDateForm = foodDateformInput.value;
@@ -64,10 +63,10 @@ submitFoodButton.addEventListener("click", async (event) => {
   };
 
   let parentFood = JSON.parse(localStorage.getItem("parentFood")) || [];
-  parentFood.push(singleFood);
+  parentFood.unshift(singleFood);
   localStorage.setItem("parentFood", JSON.stringify(parentFood));
 
-  updateTotalExerciseCalories();
+  updateTotalFoodCalories();
 
   const formModal = document.getElementById("myModal");
   formModal.reset();
@@ -76,7 +75,7 @@ submitFoodButton.addEventListener("click", async (event) => {
   window.location.reload();
 });
 
-function updateTotalExerciseCalories() {
+function updateTotalFoodCalories() {
   const existingFood = JSON.parse(localStorage.getItem("parentFood")) || [];
   let totalCalories = 0;
 
@@ -94,10 +93,11 @@ function updateTotalExerciseCalories() {
   totalCaloriesDiv.appendChild(totalCalorieLine);
   totalCaloriesDiv.setAttribute("class", "row");
   totalCalorieFood.appendChild(totalCaloriesDiv);
+  // return totalCalories; // Return the total calories
 }
 
-// Initial call to display total calories when the page loads
-updateTotalExerciseCalories();
+// Call updateTotalExerciseCalories to update total calories and get the value
+updateTotalFoodCalories();
 
 // Existing code to display food records
 const lastFood = JSON.parse(localStorage.getItem("parentFood")) || [];
@@ -130,6 +130,7 @@ for (const singleFood of lastFood) {
   foodRecord.setAttribute("class", "col s6 food-record");
   calorieRecord.setAttribute("class", "col s5 calorie-record");
   deleteFood.setAttribute("class", "col s1 delete-record");
+
   deleteFood.setAttribute("id", `delete-${singleFood.foodId}`);
   deleteFood.setAttribute("onclick", "handleDeleteFood(event)");
 }
@@ -142,6 +143,6 @@ function handleDeleteFood(event) {
   existingFood.splice(index, 1);
 
   localStorage.setItem("parentFood", JSON.stringify(existingFood));
-  updateTotalExerciseCalories(); // Update total calories after deletion
+  updateTotalFoodCalories(); // Update total calories after deletion
   window.location.reload();
 }

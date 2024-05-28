@@ -1,32 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css");
 
-.brand-logo{
-    margin-left:15px;
+.brand-logo {
+  margin-left: 15px;
 }
 
-main{
-    text-align: center;
-    justify-content: center;
+main {
+  text-align: center;
+  justify-content: center;
 }
 
-.content{
-    text-align: center;
+.content {
+  text-align: center;
 }
 
-.date-selector{
+.date-selector {
   text-decoration: none;
   max-width: 120px;
   text-align: center;
   margin: auto;
-
 }
 
-.datepicker-date-display{
-  display:none;
+.datepicker-date-display {
+  display: none;
 }
 
-.datepicker-modal{
+.datepicker-modal {
   width: 10px;
 }
 
@@ -41,8 +40,8 @@ main{
   margin: 0 auto;
 }
 
-.datepicker-calendar{
-  width:200px;
+.datepicker-calendar {
+  width: 200px;
 }
 
 .datepicker-controls {
@@ -50,45 +49,45 @@ main{
   margin: 0 auto;
 }
 
-.datepicker-modal{
-  width:200px;
-}
-
-.datepicker-footer{
+.datepicker-modal {
   width: 200px;
-  margin:0;
 }
 
-.datepicker-clear{
-  width:0;
-padding: 0;
+.datepicker-footer {
+  width: 200px;
+  margin: 0;
 }
 
-.container{
-    width: 80%;
+.datepicker-clear {
+  width: 0;
+  padding: 0;
 }
 
-.col{
-    border: 40px black; 
-
+.container {
+  width: 80%;
 }
 
-#modal-calorie{
-    display:none;
+.col {
+  border: 40px black;
 }
 
-#daily-food-records{
+#modal-calorie {
+  display: none;
+}
+
+#daily-food-records {
+  text-align: left;
+  text-align: center;
+}
+
+#totalCalorieFood {
   text-align: left;
 }
 
-#totalCalorieFood{
-  text-align: left;
+#exercise-tracker-header {
+  margin-top: 50px;
 }
 
-#exercise-tracker-header{
-margin-top: 50px;
-}
-
-footer{
-    text-align: center;
+footer {
+  text-align: center;
 }

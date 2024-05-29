@@ -4,6 +4,7 @@ const foodDateformInput = document.querySelector("#datepicker");
 const submitFoodButton = document.querySelector("#submit-new-food");
 const totalCalorieFood = document.getElementById("totalCalorieFood");
 const dailyFoodRecords = document.getElementById("daily-food-records");
+const msgDiv = document.querySelector("#msg");
 
 document.addEventListener("DOMContentLoaded", function () {
   const elems = document.querySelectorAll(".modal");
@@ -48,12 +49,32 @@ function generateFoodId() {
   return crypto.randomUUID();
 }
 
+function displayMessage(type, message) {
+  msgDiv.textContent = message;
+  msgDiv.setAttribute("class", type);
+}
+
 submitFoodButton.addEventListener("click", async (event) => {
   event.preventDefault();
   await logFood();
   const foodCaloriesForm = foodCalorieOutput.value;
   const foodNameForm = foodNameInput.value;
   const foodDateForm = foodDateformInput.value;
+  
+  let isError = false;
+
+  if (foodNameForm.trim() === "" || !foodNameForm) {
+    console.log("foodNameForm+++++", foodNameForm);
+    displayMessage("error", "Food cannot be blank");
+    isError = true;
+  } else if (foodDateForm.trim() === "" || !foodDateForm) {
+    displayMessage("error", "Date cannot be blank");
+    isError = true;
+  } else {
+    displayMessage("success", "Submitted successfully");
+  }
+  if (!isError) {
+
   const singleFood = {
     foodDateForm: foodDateForm,
     foodNameForm: foodNameForm,
@@ -73,6 +94,8 @@ submitFoodButton.addEventListener("click", async (event) => {
   const instance = M.Modal.getInstance(document.getElementById("foodModal"));
   instance.close();
   window.location.reload();
+  }
+
 });
 
 function updateTotalFoodCalories() {
@@ -105,7 +128,7 @@ const lastFood = JSON.parse(localStorage.getItem("parentFood")) || [];
 // Sort reverse chronological order
 const sortResult = lastFood.sort((a, b) => new Date(b.dttm) - new Date(a.dttm));
 
-const foodrecordContainer = document.getElementById("daily-food-records");
+const foodRecordContainer = document.getElementById("daily-food-records");
 
 for (const singleFood of lastFood) {
   const dateGroup = document.createElement("div");
@@ -113,13 +136,13 @@ for (const singleFood of lastFood) {
   const foodRow = document.createElement("div");
   const foodRecord = document.createElement("div");
   const calorieRecord = document.createElement("div");
-  const deleteFood = document.createElement("div");
+  const deleteFood = document.createElement("a");
 
   foodRecord.textContent = singleFood.foodNameForm;
   calorieRecord.textContent = singleFood.foodCaloriesForm;
   deleteFood.textContent = "×";
 
-  foodrecordContainer.appendChild(dateGroup);
+  foodRecordContainer.appendChild(dateGroup);
   dateGroup.appendChild(foodLine);
   foodLine.appendChild(foodRow);
   foodRow.appendChild(foodRecord);
@@ -130,7 +153,6 @@ for (const singleFood of lastFood) {
   foodRecord.setAttribute("class", "col s6 food-record");
   calorieRecord.setAttribute("class", "col s5 calorie-record");
   deleteFood.setAttribute("class", "col s1 delete-record");
-
   deleteFood.setAttribute("id", `delete-${singleFood.foodId}`);
   deleteFood.setAttribute("onclick", "handleDeleteFood(event)");
 }

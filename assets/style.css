@@ -88,6 +88,51 @@ main {
   margin-top: 50px;
 }
 
+#exercise-calorie-modal{
+  display:none;
+}
+
 footer {
   text-align: center;
+}
+
+#msg {
+  visibility: hidden;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  height: 1em;
+  font-size: 1em;
+}
+
+#msg.success,
+#msg.error {
+  visibility: visible;
+}
+
+#msg.success {
+  color: #0da063;
+}
+
+#emsg.error, #msg.error {
+  color: #e6252c;
+}
+
+
+#emsg {
+  visibility: hidden;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  height: 1em;
+  font-size: 1em;
+}
+
+#emsg.success,
+#emsg.error {
+  visibility: visible;
+}
+
+#emsg.success {
+  color: #0da063;
 }

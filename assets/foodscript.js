@@ -57,10 +57,10 @@ function displayMessage(type, message) {
 submitFoodButton.addEventListener("click", async (event) => {
   event.preventDefault();
   await logFood();
-  const foodCaloriesForm = foodCalorieOutput.value;
   const foodNameForm = foodNameInput.value;
   const foodDateForm = foodDateformInput.value;
-  
+  const foodCaloriesForm = foodCalorieOutput.value;
+
   let isError = false;
 
   if (foodNameForm.trim() === "" || !foodNameForm) {
@@ -74,28 +74,26 @@ submitFoodButton.addEventListener("click", async (event) => {
     displayMessage("success", "Submitted successfully");
   }
   if (!isError) {
+    const singleFood = {
+      foodDateForm: foodDateForm,
+      foodNameForm: foodNameForm,
+      foodCaloriesForm: foodCaloriesForm,
+      dttm: new Date(),
+      foodId: generateFoodId(),
+    };
 
-  const singleFood = {
-    foodDateForm: foodDateForm,
-    foodNameForm: foodNameForm,
-    foodCaloriesForm: foodCaloriesForm,
-    dttm: new Date(),
-    foodId: generateFoodId(),
-  };
+    let parentFood = JSON.parse(localStorage.getItem("parentFood")) || [];
+    parentFood.unshift(singleFood);
+    localStorage.setItem("parentFood", JSON.stringify(parentFood));
 
-  let parentFood = JSON.parse(localStorage.getItem("parentFood")) || [];
-  parentFood.unshift(singleFood);
-  localStorage.setItem("parentFood", JSON.stringify(parentFood));
+    updateTotalFoodCalories();
 
-  updateTotalFoodCalories();
-
-  const formModal = document.getElementById("myModal");
-  formModal.reset();
-  const instance = M.Modal.getInstance(document.getElementById("foodModal"));
-  instance.close();
-  window.location.reload();
+    const formModal = document.getElementById("myModal");
+    formModal.reset();
+    const instance = M.Modal.getInstance(document.getElementById("foodModal"));
+    instance.close();
+    window.location.reload();
   }
-
 });
 
 function updateTotalFoodCalories() {
@@ -116,10 +114,9 @@ function updateTotalFoodCalories() {
   totalCaloriesDiv.appendChild(totalCalorieLine);
   totalCaloriesDiv.setAttribute("class", "row");
   totalCalorieFood.appendChild(totalCaloriesDiv);
-  // return totalCalories; // Return the total calories
 }
 
-// Call updateTotalExerciseCalories to update total calories and get the value
+// Call updateTotalFoodCalories to update total calories and get the value
 updateTotalFoodCalories();
 
 // Existing code to display food records

@@ -1,9 +1,10 @@
 const exerciseCalorieOutput = document.querySelector("#exerciseCalories");
 const exerciseNameInput = document.querySelector("#exerciseItem");
-const exerciseDuratonInput = document.querySelector("#exerciseDuration");
+// const exerciseDuratonInput = document.querySelector("#exerciseDuration");
 const exerciseDateformInput = document.querySelector("#eDatepicker");
 const totalCalorieBurned = document.getElementById("totalCalorieBurned");
 const submitExerciseButton = document.querySelector("#submit-new-exercise");
+const emsgDiv = document.querySelector("#emsg");
 
 document.addEventListener("DOMContentLoaded", function () {
   const elems = document.querySelectorAll(".modal");
@@ -48,18 +49,36 @@ function generateExerciseId() {
   return crypto.randomUUID();
 }
 
+function displayMessage(type, message) {
+  emsgDiv.textContent = message;
+  emsgDiv.setAttribute("class", type);
+}
+
 submitExerciseButton.addEventListener("click", async (event) => {
   event.preventDefault();
   await logExercise();
 
   const exerciseDateForm = exerciseDateformInput.value;
   const exerciseNameForm = exerciseNameInput.value;
-  const exerciseDurationForm = exerciseDuratonInput.value;
+  // const exerciseDurationForm = exerciseDuratonInput.value;
   const exerciseCaloriesForm = exerciseCalorieOutput.value;
+  let isError = false;
+
+  if (exerciseDateForm.trim() === "" || !exerciseDateForm) {
+    console.log("exerciseDateForm+++++", exerciseDateForm);
+    displayMessage("error", "Date cannot be blank");
+    isError = true;
+  } else if (exerciseNameForm.trim() === "" || !exerciseNameForm) {
+    displayMessage("error", "Exercise cannot be blank");
+    isError = true;
+  } else {
+    displayMessage("success", "Submitted successfully");
+  }
+  if (!isError) {
 
   const singleExercise = {
     exerciseCaloriesForm: exerciseCaloriesForm,
-    exerciseDurationForm: exerciseDurationForm,
+    // exerciseDurationForm: exerciseDurationForm,
     exerciseNameForm: exerciseNameForm,
     exerciseDateForm: exerciseDateForm,
     dttm: new Date(),
@@ -71,16 +90,17 @@ let parentExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
 parentExercise.push(singleExercise);
 localStorage.setItem("parentExercise", JSON.stringify(parentExercise));
  
-  updateTotalFoodCalories();
+  updateTotalExerciseCalories();
 
   const formModal = document.getElementById("workoutModal");
   formModal.reset();
   const instance = M.Modal.getInstance(document.getElementById("exerciseModal"));
   instance.close();
   window.location.reload();
+}
 });
 
-function updateTotalFoodCalories() {
+function updateTotalExerciseCalories() {
   const existingExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
   let totalExerciseCalories = 0;
 
@@ -101,7 +121,7 @@ function updateTotalFoodCalories() {
 }
 
 // Initial call to display total calories when the page loads
-updateTotalFoodCalories();
+updateTotalExerciseCalories();
 
 const lastExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
 
@@ -117,28 +137,28 @@ for (const singleExercise of lastExercise) {
   const exerciseLine = document.createElement("div");
   const exerciseRow = document.createElement("div");
   const exerciseRecord = document.createElement("div");
-  const exerciseDuration = document.createElement("div");
+  // const exerciseDuration = document.createElement("div");
   const exerciseCalorieRecord = document.createElement("div");
-  const deleteExercise = document.createElement("div");
+  const deleteExercise = document.createElement("a");
   const exerciseTotalRow = document.createElement("div");
 
   exerciseRecord.textContent = singleExercise.exerciseNameForm;
   exerciseCalorieRecord.textContent = singleExercise.exerciseCaloriesForm;
-  exerciseDuration.textContent = singleExercise.exerciseDurationForm;
+  // exerciseDuration.textContent = singleExercise.exerciseDurationForm;
   deleteExercise.textContent = `×`;
 
   exerciseRecordContainer.appendChild(eDateGroup);
   eDateGroup.appendChild(exerciseLine);
   exerciseLine.appendChild(exerciseRow);
   exerciseRow.appendChild(exerciseRecord);
-  exerciseRow.appendChild(exerciseDuration);
+  // exerciseRow.appendChild(exerciseDuration);
   exerciseRow.appendChild(exerciseCalorieRecord);
   exerciseRow.appendChild(deleteExercise);
 
   exerciseRow.setAttribute("class", "row exercise-row");
-  exerciseRecord.setAttribute("class", "col s4 exercise-record");
-  exerciseDuration.setAttribute("class", "col s3 section");
-  exerciseCalorieRecord.setAttribute("class", "col s4 calorie-record");
+  exerciseRecord.setAttribute("class", "col s6 exercise-record");
+  // exerciseDuration.setAttribute("class", "col s3 section");
+  exerciseCalorieRecord.setAttribute("class", "col s5 calorie-record");
   deleteExercise.setAttribute("class","col s1 edelete-record");
   deleteExercise.setAttribute("id", `delete-${singleExercise.exerciseId}`);
   deleteExercise.setAttribute("onclick", "handleDeleteExercise(event)")
@@ -154,7 +174,7 @@ for (const singleExercise of lastExercise) {
     existingExercise.splice(index, 1);
 
     localStorage.setItem("parentExercise", JSON.stringify(existingExercise));
-    updateTotalFoodCalories(); // Update total calories after deletion
+    updateTotalExerciseCalories(); // Update total calories after deletion
     window.location.reload();
   }
 }

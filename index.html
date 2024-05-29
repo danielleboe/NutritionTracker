@@ -23,11 +23,6 @@
     <nav>
       <div class="nav-wrapper">
         <a href="./index.html" class="brand-logo">CalorEase</a>
-        <!-- <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">JavaScript</a></li>
-      </ul> -->
       </div>
     </nav>
     <main>
@@ -79,6 +74,7 @@
                 class="validate"
               />
             </div>
+            <div id="msg"></div>
             <button type="submit" class="btn" id="submit-new-food">Save</button>
           </form>
         </div>
@@ -145,7 +141,7 @@
                 class="validate"
               />
             </div>
-            <div class="input-field">
+            <!-- <div class="input-field">
               <label for="exerciseDuration">Duration</label>
               <input
                 type="number"
@@ -153,8 +149,8 @@
                 name="exercise_duration"
                 class="validate"
               />
-            </div>
-            <div class="input-field">
+            </div> -->
+            <div class="input-field" id="exercise-calorie-modal">
               <label for="exerciseCalories">Calories</label>
               <input
                 type="number"
@@ -163,6 +159,7 @@
                 class="validate"
               />
             </div>
+            <div id="emsg"></div>
             <button type="submit" class="btn" id="submit-new-exercise">
               Save
             </button>
@@ -174,52 +171,24 @@
           </button>
         </div>
       </div>
-
-      <!-- <a class="waves-effect waves-light btn">Add Workout</a> -->
-
-      <!-- <div class="container">
-    <div class="row">
-      <div class="col s6 section"><h5>Exercise</h5></div>
-      <div class="col s3 section"><h5>Duration</h5></div>
-      <div class="col s3 section"><h5>Calories</h5></div>
-    </div>
-     insert row via js
-    <div class="row exercise-row">
-      <div class="col s6">3 min jog</div>
-      <div class="col s3">60 min</div>
-      <div class="col s3">Calories</div>
-    </div> -->
-      <!-- insert row via js -->
-
-      <!-- copy html -->
       <div class="container">
         <div class="row header">
-          <div class="col s4 section">
+          <div class="col s6 section">
             <h5>Exercise</h5>
           </div>
-          <div class="col s3 section">
+          <!-- <div class="col s3 section">
             <h5>Duration</h5>
-          </div>
-          <div class="col s4 section">
+          </div> -->
+          <div class="col s5 section">
             <h5>Calories</h5>
             <div class="col s1 section">
               <h5></h5>
             </div>
           </div>
           <div id="erecord-container">
-            <!-- <div class="date-group" >
-      <div class="col s12 m12 l12 date"> Date: May 20, 2024
-  
-      </div>
-
-  
-    </div> -->
           </div>
           <!-- Page Content goes here -->
         </div>
-
-        <!-- end copy html -->
-
         <div class="row">
           <div class="col s4 offset-s6" id="totalCalorieBurned">
             <!-- <span class="flow-text">Total Calories Burned</span> -->
@@ -235,13 +204,12 @@
         </div>
       </div>
     </div>
-
     <footer>Footer</footer>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="./assets/exercisescript.js"></script>
     <script src="./assets/foodscript.js"></script>
-    <script src="./assets/dailyscript.js"></script>
+    <!-- <script src="./assets/dailyscript.js"></script> -->
   </body>
 </html>

@@ -96,7 +96,7 @@ footer {
   text-align: center;
 }
 
-#msg {
+#msg, #eMsg {
   visibility: hidden;
   margin-top: 10px;
   margin-bottom: 20px;
@@ -106,33 +106,15 @@ footer {
 }
 
 #msg.success,
-#msg.error {
+#msg.error, #eMsg.success,
+#eMsg.error {
   visibility: visible;
 }
 
-#msg.success {
+#msg.success,#eMsg.success {
   color: #0da063;
 }
 
-#emsg.error, #msg.error {
+#eMsg.error, #msg.error {
   color: #e6252c;
-}
-
-
-#emsg {
-  visibility: hidden;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  font-weight: 700;
-  height: 1em;
-  font-size: 1em;
-}
-
-#emsg.success,
-#emsg.error {
-  visibility: visible;
-}
-
-#emsg.success {
-  color: #0da063;
 }

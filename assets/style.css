@@ -80,7 +80,7 @@ main {
   text-align: center;
 }
 
-#totalCalorieFood {
+#totalCalorieFood, #total-net-calories,  #totalCalorieBurned {
   text-align: left;
 }
 
@@ -117,4 +117,8 @@ footer {
 
 #eMsg.error, #msg.error {
   color: #e6252c;
+}
+
+.delete-record{
+  text-decoration: none;
 }

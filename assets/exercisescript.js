@@ -118,13 +118,31 @@ function updateTotalExerciseCalories() {
 
   console.log(`Total calories: ${totalExerciseCalories}`);
   totalCalorieBurned.innerHTML = ""; // Clear previous total
-  const totalCaloriesDiv = document.createElement("div");
+  // const totalCaloriesDiv = document.createElement("div");
   const totalCalorieLine = document.createElement("h6");
   totalCalorieLine.innerText = `Total Calories Burned: ${totalExerciseCalories}`;
-  totalCaloriesDiv.appendChild(totalCalorieLine);
-  totalCaloriesDiv.setAttribute("class", "row");
-  totalCalorieBurned.appendChild(totalCaloriesDiv);
+  // totalCaloriesDiv.appendChild(totalCalorieLine);
+  // totalCaloriesDiv.setAttribute("class", "row");
+  totalCalorieBurned.appendChild(totalCalorieLine);
+
+  const totalExCalories = JSON.parse(localStorage.getItem("05/29/2024")) || {};
+  console.log(`totalExCalories ${JSON.stringify(totalExCalories)}`);
+  totalExCalories.totalExerciseCalories = totalExerciseCalories
+  localStorage.setItem("05/29/2024", JSON.stringify(totalExCalories));
+
+
+const totalNetCalories = totalExCalories.totalCalories - totalExCalories.totalExerciseCalories;
+console.log(`total net calories: ${totalNetCalories}`);
+
+const totalNetCaloriesId = document.getElementById("total-net-calories");
+const totalNetCalorieLine = document.createElement("h5");
+totalNetCaloriesId.appendChild(totalNetCalorieLine);
+totalNetCalorieLine.innerText = `Total Net Calories: ${totalNetCalories}`;
+
 }
+
+
+
 
 // Initial call to display total calories when the page loads
 updateTotalExerciseCalories();

@@ -5,6 +5,9 @@ const submitFoodButton = document.querySelector("#submit-new-food");
 const totalCalorieFood = document.getElementById("totalCalorieFood");
 const dailyFoodRecords = document.getElementById("daily-food-records");
 const msgDiv = document.querySelector("#msg");
+const dateSelectorInput = document.getElementById("date-select");
+const dateSelector = dateSelectorInput.value;
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const elems = document.querySelectorAll(".modal");

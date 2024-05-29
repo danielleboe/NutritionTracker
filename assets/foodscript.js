@@ -109,7 +109,7 @@ function updateTotalFoodCalories() {
     }
   }
 
-  console.log(`Total calories: ${totalCalories}`);
+  console.log(`Total food calories: ${totalCalories}`);
   totalCalorieFood.innerHTML = ""; // Clear previous total
   const totalCaloriesDiv = document.createElement("div");
   const totalCalorieLine = document.createElement("h6");
@@ -117,6 +117,14 @@ function updateTotalFoodCalories() {
   totalCaloriesDiv.appendChild(totalCalorieLine);
   totalCaloriesDiv.setAttribute("class", "row");
   totalCalorieFood.appendChild(totalCaloriesDiv);
+
+  const totalFoodCalories = JSON.parse(localStorage.getItem("05/29/2024")) || {};
+  totalFoodCalories.totalCalories = totalCalories
+  console.log(`totalfoodcalories ${totalFoodCalories}`);
+  localStorage.setItem("05/29/2024", JSON.stringify(totalFoodCalories));
+
+  const totalNetCalories = totalFoodCalories.totalCalories - totalFoodCalories.totalExerciseCalories;
+  console.log(`total net calories: ${totalNetCalories}`);
 }
 
 // Call updateTotalFoodCalories to update total calories and get the value

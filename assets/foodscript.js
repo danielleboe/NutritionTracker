@@ -55,6 +55,7 @@ function displayMessage(type, message) {
   msgDiv.setAttribute("class", type);
 }
 
+// start submit button
 submitFoodButton.addEventListener("click", async (event) => {
   event.preventDefault();
   await logFood();
@@ -91,11 +92,13 @@ submitFoodButton.addEventListener("click", async (event) => {
 
     const formModal = document.getElementById("myModal");
     formModal.reset();
-    const instance = M.Modal.getInstance(document.getElementById("foodModal"));
+    const instance = M.Modal.getInstance(
+      document.getElementById("foodModal"));
     instance.close();
     window.location.reload();
   }
 });
+// End submit button functions
 
 // Date Selection Start
 document.getElementById("date-select").addEventListener("change", dateSelect);
@@ -157,6 +160,7 @@ function dateSelect() {
 // Date Selection End
 
 
+// Total calories eaten start
 function updateTotalFoodCalories() {
   const existingFood = JSON.parse(localStorage.getItem("parentFood")) || [];
   const dateSelector = dateSelectorInput.value;
@@ -187,12 +191,12 @@ function updateTotalFoodCalories() {
   const totalCaloriesDiv = document.createElement("div");
   const totalCalorieLine = document.createElement("h6");
   totalCalorieLine.innerText = `Total Calories Eaten: ${totalCalories}`;
+  totalCalorieFood.appendChild(totalCaloriesDiv);
   totalCaloriesDiv.appendChild(totalCalorieLine);
   totalCaloriesDiv.setAttribute("class", "row");
-  totalCalorieFood.appendChild(totalCaloriesDiv);
+ 
 
-  const totalFoodCalories =
-    JSON.parse(localStorage.getItem("05/29/2024")) || {};
+  const totalFoodCalories = JSON.parse(localStorage.getItem("05/29/2024")) || {};
   totalFoodCalories.totalCalories = totalCalories;
   console.log(`totalfoodcalories ${totalFoodCalories}`);
   localStorage.setItem("05/29/2024", JSON.stringify(totalFoodCalories));
@@ -200,6 +204,7 @@ function updateTotalFoodCalories() {
   const totalNetCalories =
     totalFoodCalories.totalCalories - totalFoodCalories.totalExerciseCalories;
   console.log(`total net calories: ${totalNetCalories}`);
+  
 };
 
 // Call updateTotalFoodCalories to update total calories and get the value

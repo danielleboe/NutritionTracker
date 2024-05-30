@@ -6,8 +6,6 @@ const totalCalorieFood = document.getElementById("totalCalorieFood");
 const dailyFoodRecords = document.getElementById("daily-food-records");
 const msgDiv = document.querySelector("#msg");
 const dateSelectorInput = document.getElementById("date-select");
-const dateSelector = dateSelectorInput.value;
-
 
 document.addEventListener("DOMContentLoaded", function () {
   const elems = document.querySelectorAll(".modal");
@@ -118,12 +116,14 @@ function updateTotalFoodCalories() {
   totalCaloriesDiv.setAttribute("class", "row");
   totalCalorieFood.appendChild(totalCaloriesDiv);
 
-  const totalFoodCalories = JSON.parse(localStorage.getItem("05/29/2024")) || {};
-  totalFoodCalories.totalCalories = totalCalories
+  const totalFoodCalories =
+    JSON.parse(localStorage.getItem("05/29/2024")) || {};
+  totalFoodCalories.totalCalories = totalCalories;
   console.log(`totalfoodcalories ${totalFoodCalories}`);
   localStorage.setItem("05/29/2024", JSON.stringify(totalFoodCalories));
 
-  const totalNetCalories = totalFoodCalories.totalCalories - totalFoodCalories.totalExerciseCalories;
+  const totalNetCalories =
+    totalFoodCalories.totalCalories - totalFoodCalories.totalExerciseCalories;
   console.log(`total net calories: ${totalNetCalories}`);
 }
 
@@ -133,37 +133,65 @@ updateTotalFoodCalories();
 // Existing code to display food records
 const lastFood = JSON.parse(localStorage.getItem("parentFood")) || [];
 
-// Sort reverse chronological order
-const sortResult = lastFood.sort((a, b) => new Date(b.dttm) - new Date(a.dttm));
-
 const foodRecordContainer = document.getElementById("daily-food-records");
 
-for (const singleFood of lastFood) {
-  const dateGroup = document.createElement("div");
-  const foodLine = document.createElement("div");
-  const foodRow = document.createElement("div");
-  const foodRecord = document.createElement("div");
-  const calorieRecord = document.createElement("div");
-  const deleteFood = document.createElement("a");
+// Date Selection Start
+document.getElementById("date-select").addEventListener("change", dateSelect);
+function dateSelect() {
+  while (foodRecordContainer.firstChild) {
+    foodRecordContainer.removeChild(foodRecordContainer.firstChild);
+  }
+  const dateSelector = dateSelectorInput.value;
+  console.log(`dateSelector: ${dateSelector}`);
+  const lastFood = JSON.parse(localStorage.getItem("parentFood")) || [];
+  const dateFilter = lastFood.filter((lastFoodDate) => {
+    const foodDate = dayjs(lastFoodDate.foodDateForm, "MMM DD,YYYY");
+    const dateFormatChange = dayjs(foodDate).format("YYYY-MM-DD");
+    console.log(`dateformatchange ${dateFormatChange}`);
+    console.log(`foodformdateformat ${foodDate}`);
+    console.log(
+      `lastfooddate ${lastFoodDate.foodDateForm}`,
+      `dateselector ${dateSelector}`
+    );
+    return dateFormatChange === dateSelector;
+  });
 
-  foodRecord.textContent = singleFood.foodNameForm;
-  calorieRecord.textContent = singleFood.foodCaloriesForm;
-  deleteFood.textContent = "×";
+  // Sort reverse chronological order
+  const sortResult = dateFilter.sort(
+    (a, b) => new Date(b.dttm) - new Date(a.dttm)
+  );
 
-  foodRecordContainer.appendChild(dateGroup);
-  dateGroup.appendChild(foodLine);
-  foodLine.appendChild(foodRow);
-  foodRow.appendChild(foodRecord);
-  foodRow.appendChild(calorieRecord);
-  foodRow.appendChild(deleteFood);
+  console.log(`datefilter`, dateFilter);
 
-  foodRow.setAttribute("class", "row food-row");
-  foodRecord.setAttribute("class", "col s6 food-record");
-  calorieRecord.setAttribute("class", "col s5 calorie-record");
-  deleteFood.setAttribute("class", "col s1 delete-record");
-  deleteFood.setAttribute("id", `delete-${singleFood.foodId}`);
-  deleteFood.setAttribute("onclick", "handleDeleteFood(event)");
+  for (const singleFood of sortResult) {
+    const dateGroup = document.createElement("div");
+    const foodLine = document.createElement("div");
+    const foodRow = document.createElement("div");
+    const foodRecord = document.createElement("div");
+    const calorieRecord = document.createElement("div");
+    const deleteFood = document.createElement("a");
+
+    foodRecord.textContent = singleFood.foodNameForm;
+    calorieRecord.textContent = singleFood.foodCaloriesForm;
+    deleteFood.textContent = "×";
+
+    foodRecordContainer.appendChild(dateGroup);
+    dateGroup.appendChild(foodLine);
+    foodLine.appendChild(foodRow);
+    foodRow.appendChild(foodRecord);
+    foodRow.appendChild(calorieRecord);
+    foodRow.appendChild(deleteFood);
+
+    foodRow.setAttribute("class", "row food-row");
+    foodRecord.setAttribute("class", "col s6 food-record");
+    calorieRecord.setAttribute("class", "col s5 calorie-record");
+    deleteFood.setAttribute("class", "col s1 delete-record");
+    deleteFood.setAttribute("id", `delete-${singleFood.foodId}`);
+    deleteFood.setAttribute("onclick", "handleDeleteFood(event)");
+  }
 }
+
+// Date Selection End
 
 function handleDeleteFood(event) {
   const deleteId = event.target.id.substring(7);

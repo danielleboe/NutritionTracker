@@ -84,7 +84,7 @@ submitFoodButton.addEventListener("click", async (event) => {
     };
 
     let parentFood = JSON.parse(localStorage.getItem("parentFood")) || [];
-    parentFood.unshift(singleFood);
+    parentFood.push(singleFood);
     localStorage.setItem("parentFood", JSON.stringify(parentFood));
 
     updateTotalFoodCalories();
@@ -96,44 +96,6 @@ submitFoodButton.addEventListener("click", async (event) => {
     window.location.reload();
   }
 });
-
-function updateTotalFoodCalories() {
-  const existingFood = JSON.parse(localStorage.getItem("parentFood")) || [];
-  let totalCalories = 0;
-
-  if (existingFood.length > 0) {
-    for (let i = 0; i < existingFood.length; i++) {
-      totalCalories += parseInt(existingFood[i].foodCaloriesForm, 10);
-    }
-  }
-
-  console.log(`Total food calories: ${totalCalories}`);
-  totalCalorieFood.innerHTML = ""; // Clear previous total
-  const totalCaloriesDiv = document.createElement("div");
-  const totalCalorieLine = document.createElement("h6");
-  totalCalorieLine.innerText = `Total Calories Eaten: ${totalCalories}`;
-  totalCaloriesDiv.appendChild(totalCalorieLine);
-  totalCaloriesDiv.setAttribute("class", "row");
-  totalCalorieFood.appendChild(totalCaloriesDiv);
-
-  const totalFoodCalories =
-    JSON.parse(localStorage.getItem("05/29/2024")) || {};
-  totalFoodCalories.totalCalories = totalCalories;
-  console.log(`totalfoodcalories ${totalFoodCalories}`);
-  localStorage.setItem("05/29/2024", JSON.stringify(totalFoodCalories));
-
-  const totalNetCalories =
-    totalFoodCalories.totalCalories - totalFoodCalories.totalExerciseCalories;
-  console.log(`total net calories: ${totalNetCalories}`);
-}
-
-// Call updateTotalFoodCalories to update total calories and get the value
-updateTotalFoodCalories();
-
-// Existing code to display food records
-const lastFood = JSON.parse(localStorage.getItem("parentFood")) || [];
-
-const foodRecordContainer = document.getElementById("daily-food-records");
 
 // Date Selection Start
 document.getElementById("date-select").addEventListener("change", dateSelect);
@@ -189,9 +151,64 @@ function dateSelect() {
     deleteFood.setAttribute("id", `delete-${singleFood.foodId}`);
     deleteFood.setAttribute("onclick", "handleDeleteFood(event)");
   }
-}
-
+  
+  updateTotalFoodCalories();
+};
 // Date Selection End
+
+
+function updateTotalFoodCalories() {
+  const existingFood = JSON.parse(localStorage.getItem("parentFood")) || [];
+  const dateSelector = dateSelectorInput.value;
+  console.log(`dateSelector2: ${dateSelector}`);
+  const dateFilter = existingFood.filter((lastFoodDate) => {
+    const foodDate = dayjs(lastFoodDate.foodDateForm, "MMM DD,YYYY");
+    const dateFormatChange = dayjs(foodDate).format("YYYY-MM-DD");
+    console.log(`dateformatchange2 ${dateFormatChange}`);
+    console.log(`foodformdateformat2 ${foodDate}`);
+    console.log(
+      `lastfooddate2 ${lastFoodDate.foodDateForm}`,
+      `dateselector2 ${dateSelector}`
+    );
+    return dateFormatChange === dateSelector;
+  });
+
+
+  let totalCalories = 0;
+
+  if (dateFilter.length > 0) {
+    for (let i = 0; i < dateFilter.length; i++) {
+      totalCalories += parseInt(dateFilter[i].foodCaloriesForm, 10);
+    }
+  }
+
+  console.log(`Total food calories: ${totalCalories}`);
+  totalCalorieFood.innerHTML = ""; // Clear previous total
+  const totalCaloriesDiv = document.createElement("div");
+  const totalCalorieLine = document.createElement("h6");
+  totalCalorieLine.innerText = `Total Calories Eaten: ${totalCalories}`;
+  totalCaloriesDiv.appendChild(totalCalorieLine);
+  totalCaloriesDiv.setAttribute("class", "row");
+  totalCalorieFood.appendChild(totalCaloriesDiv);
+
+  const totalFoodCalories =
+    JSON.parse(localStorage.getItem("05/29/2024")) || {};
+  totalFoodCalories.totalCalories = totalCalories;
+  console.log(`totalfoodcalories ${totalFoodCalories}`);
+  localStorage.setItem("05/29/2024", JSON.stringify(totalFoodCalories));
+
+  const totalNetCalories =
+    totalFoodCalories.totalCalories - totalFoodCalories.totalExerciseCalories;
+  console.log(`total net calories: ${totalNetCalories}`);
+};
+
+// Call updateTotalFoodCalories to update total calories and get the value
+updateTotalFoodCalories();
+
+// Existing code to display food records
+const lastFood = JSON.parse(localStorage.getItem("parentFood")) || [];
+
+const foodRecordContainer = document.getElementById("daily-food-records");
 
 function handleDeleteFood(event) {
   const deleteId = event.target.id.substring(7);

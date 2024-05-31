@@ -1,31 +1,32 @@
 const exerciseCalorieOutput = document.querySelector("#exerciseCalories");
 const exerciseNameInput = document.querySelector("#exerciseItem");
-// const exerciseDuratonInput = document.querySelector("#exerciseDuration");
 const exerciseDateformInput = document.querySelector("#eDatepicker");
 const totalCalorieBurned = document.getElementById("totalCalorieBurned");
 const submitExerciseButton = document.querySelector("#submit-new-exercise");
 const emsgDiv = document.getElementById("eMsg");
 const exerciseRecordContainer = document.getElementById("erecord-container");
 
-
 //start date selected - saved from local storage
-function savedDate () {
+function savedDate() {
   while (exerciseRecordContainer.firstChild) {
     exerciseRecordContainer.removeChild(exerciseRecordContainer.firstChild);
   }
   const dateSelector = window.localStorage.getItem("dateSelector");
   document.getElementById("date-select").value = dateSelector;
 
-    console.log(`dateSelected: ${dateSelector}`);
+  console.log(`dateSelected: ${dateSelector}`);
   const lastExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
   const dateExFilter = lastExercise.filter((lastExerciseDate) => {
-    const exerciseDate = dayjs(lastExerciseDate.exerciseDateForm, "MMM DD,YYYY");
+    const exerciseDate = dayjs(
+      lastExerciseDate.exerciseDateForm,
+      "MMM DD,YYYY"
+    );
     const dateExFormatChange = dayjs(exerciseDate).format("YYYY-MM-DD");
     console.log(`dateExformatchange ${dateExFormatChange}`);
     console.log(`exerciseformdateformat ${exerciseDate}`);
     console.log(
       `lastExerciseDate ${lastExerciseDate.exerciseDateForm}`,
-      `dateSelector ${dateSelector}`,
+      `dateSelector ${dateSelector}`
     );
     localStorage.setItem("dateSelected", dateSelector);
     return dateExFormatChange === dateSelector;
@@ -64,18 +65,22 @@ function savedDate () {
     deleteExercise.setAttribute("id", `delete-${singleExercise.exerciseId}`);
     deleteExercise.setAttribute("onclick", "handleDeleteExercise(event)");
   }
-  
+
   updateTotalExerciseCalorie();
-};
+}
 // End Saved Date Selection (on page load) from local storageEnd
 
 // Total calories burned on page load start
 function updateTotalExerciseCalorie() {
-  const existingExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
+  const existingExercise =
+    JSON.parse(localStorage.getItem("parentExercise")) || [];
   const dateSelector = window.localStorage.getItem("dateSelector");
   console.log(`dateSelector2: ${dateSelector}`);
   const dateFilter = existingExercise.filter((lastExerciseDate) => {
-    const exerciseDate = dayjs(lastExerciseDate.exerciseDateForm, "MMM DD,YYYY");
+    const exerciseDate = dayjs(
+      lastExerciseDate.exerciseDateForm,
+      "MMM DD,YYYY"
+    );
     const dateExFormatChange = dayjs(exerciseDate).format("YYYY-MM-DD");
     console.log(`dateformatchange2 ${dateExFormatChange}`);
     console.log(`exerciseformdateformat2 ${exerciseDate}`);
@@ -90,7 +95,10 @@ function updateTotalExerciseCalorie() {
 
   if (dateFilter.length > 0) {
     for (let i = 0; i < dateFilter.length; i++) {
-      totalExerciseCalories += parseInt(dateFilter[i].exerciseCaloriesValue, 10);
+      totalExerciseCalories += parseInt(
+        dateFilter[i].exerciseCaloriesValue,
+        10
+      );
     }
   }
 
@@ -105,22 +113,21 @@ function updateTotalExerciseCalorie() {
   console.log(`totalExCalories ${totalExCalories}`);
   localStorage.setItem("dateEx", JSON.stringify(totalExCalories));
 
-const totalNetCalories = 
-totalExCalories.totalCalories - totalExCalories.totalExerciseCalories;
-console.log(`total net calories: ${totalNetCalories}`);
+  const totalNetCalories =
+    totalExCalories.totalCalories - totalExCalories.totalExerciseCalories;
+  console.log(`total net calories: ${totalNetCalories}`);
 
-const totalNetCaloriesId = document.getElementById("total-net-calories");
-while (totalNetCaloriesId.firstChild) {
-  totalNetCaloriesId.removeChild(totalNetCaloriesId.firstChild);
+  const totalNetCaloriesId = document.getElementById("total-net-calories");
+  while (totalNetCaloriesId.firstChild) {
+    totalNetCaloriesId.removeChild(totalNetCaloriesId.firstChild);
+  }
+
+  const totalNetCalorieLine = document.createElement("h5");
+  totalNetCalorieLine.setAttribute("id", "net-calorie-line");
+  totalNetCaloriesId.appendChild(totalNetCalorieLine);
+  totalNetCalorieLine.innerText = `Total Net Calories: ${totalNetCalories}`;
 }
-
-const totalNetCalorieLine = document.createElement("h5"); 
-totalNetCalorieLine.setAttribute("id", "net-calorie-line");
-totalNetCaloriesId.appendChild(totalNetCalorieLine);
-totalNetCalorieLine.innerText = `Total Net Calories: ${totalNetCalories}`;
-};
 // Total calories burned on page load end
-
 
 //Modal Materialize styling load
 document.addEventListener("DOMContentLoaded", function () {
@@ -211,7 +218,8 @@ submitExerciseButton.addEventListener("click", async (event) => {
     const formModal = document.getElementById("workoutModal");
     formModal.reset();
     const instance = M.Modal.getInstance(
-      document.getElementById("exerciseModal"));
+      document.getElementById("exerciseModal")
+    );
     instance.close();
     window.location.reload();
   }
@@ -224,17 +232,20 @@ function dateSelect() {
   while (exerciseRecordContainer.firstChild) {
     exerciseRecordContainer.removeChild(exerciseRecordContainer.firstChild);
   }
-    const dateSelector = dateSelectorInput.value;
-    console.log(`dateSelector: ${dateSelector}`);
+  const dateSelector = dateSelectorInput.value;
+  console.log(`dateSelector: ${dateSelector}`);
   const lastExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
   const dateExFilter = lastExercise.filter((lastExerciseDate) => {
-    const exerciseDate = dayjs(lastExerciseDate.exerciseDateForm, "MMM DD,YYYY");
+    const exerciseDate = dayjs(
+      lastExerciseDate.exerciseDateForm,
+      "MMM DD,YYYY"
+    );
     const dateExFormatChange = dayjs(exerciseDate).format("YYYY-MM-DD");
     console.log(`dateExformatchange ${dateExFormatChange}`);
     console.log(`exerciseformdateformat ${exerciseDate}`);
     console.log(
       `lastExerciseDate ${lastExerciseDate.exerciseDateForm}`,
-      `dateselector ${dateSelector}`,
+      `dateselector ${dateSelector}`
     );
     localStorage.setItem("dateSelector", dateSelector);
     return dateExFormatChange === dateSelector;
@@ -273,18 +284,22 @@ function dateSelect() {
     deleteExercise.setAttribute("id", `delete-${singleExercise.exerciseId}`);
     deleteExercise.setAttribute("onclick", "handleDeleteExercise(event)");
   }
-  
+
   updateTotalExerciseCalories();
-};
+}
 // Date Selection End -on date change
 
 // Total calories burned start - populate on change
 function updateTotalExerciseCalories() {
-  const existingExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
+  const existingExercise =
+    JSON.parse(localStorage.getItem("parentExercise")) || [];
   const dateSelector = dateSelectorInput.value;
   console.log(`dateSelector2: ${dateSelector}`);
   const dateFilter = existingExercise.filter((lastExerciseDate) => {
-    const exerciseDate = dayjs(lastExerciseDate.exerciseDateForm, "MMM DD,YYYY");
+    const exerciseDate = dayjs(
+      lastExerciseDate.exerciseDateForm,
+      "MMM DD,YYYY"
+    );
     const dateExFormatChange = dayjs(exerciseDate).format("YYYY-MM-DD");
     console.log(`dateformatchange2 ${dateExFormatChange}`);
     console.log(`exerciseformdateformat2 ${exerciseDate}`);
@@ -299,7 +314,10 @@ function updateTotalExerciseCalories() {
 
   if (dateFilter.length > 0) {
     for (let i = 0; i < dateFilter.length; i++) {
-      totalExerciseCalories += parseInt(dateFilter[i].exerciseCaloriesValue, 10);
+      totalExerciseCalories += parseInt(
+        dateFilter[i].exerciseCaloriesValue,
+        10
+      );
     }
   }
 
@@ -314,28 +332,26 @@ function updateTotalExerciseCalories() {
   console.log(`totalExCalories ${totalExCalories}`);
   localStorage.setItem("dateEx", JSON.stringify(totalExCalories));
 
-const totalNetCalories = 
-totalExCalories.totalCalories - totalExCalories.totalExerciseCalories;
-console.log(`total net calories: ${totalNetCalories}`);
+  const totalNetCalories =
+    totalExCalories.totalCalories - totalExCalories.totalExerciseCalories;
+  console.log(`total net calories: ${totalNetCalories}`);
 
-const totalNetCaloriesId = document.getElementById("total-net-calories");
-while (totalNetCaloriesId.firstChild) {
-  totalNetCaloriesId.removeChild(totalNetCaloriesId.firstChild);
+  const totalNetCaloriesId = document.getElementById("total-net-calories");
+  while (totalNetCaloriesId.firstChild) {
+    totalNetCaloriesId.removeChild(totalNetCaloriesId.firstChild);
+  }
+
+  const totalNetCalorieLine = document.createElement("h5");
+  totalNetCalorieLine.setAttribute("id", "net-calorie-line");
+  totalNetCaloriesId.appendChild(totalNetCalorieLine);
+  totalNetCalorieLine.innerText = `Total Net Calories: ${totalNetCalories}`;
 }
-
-const totalNetCalorieLine = document.createElement("h5"); 
-totalNetCalorieLine.setAttribute("id", "net-calorie-line");
-totalNetCaloriesId.appendChild(totalNetCalorieLine);
-totalNetCalorieLine.innerText = `Total Net Calories: ${totalNetCalories}`;
-};
 //End total calories calculation - on date change
 
 // Initial call to display total calories when the page loads
 updateTotalExerciseCalories();
 
 const lastExercise = JSON.parse(localStorage.getItem("parentExercise")) || [];
-
-
 
 //function to handle deleting a exercise row
 function handleDeleteExercise(event) {
@@ -354,4 +370,3 @@ function handleDeleteExercise(event) {
 savedDate();
 
 ///////
-

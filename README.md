@@ -1,5 +1,7 @@
 # NutritionTracker
 Nutrition Tracker - CalorEase
+- Repository - https://github.com/danielleboe/NutritionTracker
+- Web App Link - https://danielleboe.github.io/NutritionTracker/
 
 # Introduction
 The application allows a user to track the food they've eaten and their daily exercise and calculate a total net calorie value to help users meet their health goals.

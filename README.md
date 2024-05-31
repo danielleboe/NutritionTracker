@@ -39,9 +39,13 @@ THEN that item deletes from the list and is removed from the total calorie count
 - Add exercise entry (modal form)
 - Automatically populate the calories for the exercise entered (API 2)
 
-## Demo Video
-
 ## Screen Shots
+![App View](./assets/Nutrition-Tracker.png "Full Screen")
+![Add Food Modal](./assets/Add%20Food.png "Add Food")
+![Food Modal Error](./assets/Add%20Food%20Error.png "Food Modal Error")
+![Add Workout Modal](./assets/Add%20Workout.png "Add Workout Modal")
+![Workout Modal Error](./assets/Add%20Workout%20Error.png "Workout Error Modal")
+![Select Date](./assets/Select%20Date.png "Select Date")
 
 
 ## Contributors

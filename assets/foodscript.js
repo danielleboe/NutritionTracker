@@ -8,7 +8,6 @@ const msgDiv = document.querySelector("#msg");
 const dateSelectorInput = document.getElementById("date-select");
 const foodRecordContainer = document.getElementById("daily-food-records");
 
-
 // Date Selection on page load Start
 function savedDate() {
   while (foodRecordContainer.firstChild) {
@@ -63,11 +62,10 @@ function savedDate() {
     deleteFood.setAttribute("id", `delete-${singleFood.foodId}`);
     deleteFood.setAttribute("onclick", "handleDeleteFood(event)");
   }
-  
-  updateTotalFoodCalorie();
-};
-// Date Selection End
 
+  updateTotalFoodCalorie();
+}
+// Date Selection End
 
 // Total calories eaten start
 function updateTotalFoodCalorie() {
@@ -86,7 +84,6 @@ function updateTotalFoodCalorie() {
     return dateFormatChange === dateSelector;
   });
 
-
   let totalCalories = 0;
 
   if (dateFilter.length > 0) {
@@ -103,7 +100,6 @@ function updateTotalFoodCalorie() {
   totalCalorieFood.appendChild(totalCaloriesDiv);
   totalCaloriesDiv.appendChild(totalCalorieLine);
   totalCaloriesDiv.setAttribute("class", "row");
- 
 
   const totalFoodCalories = JSON.parse(localStorage.getItem("dateEx")) || {};
   totalFoodCalories.totalCalories = totalCalories;
@@ -113,12 +109,8 @@ function updateTotalFoodCalorie() {
   const totalNetCalories =
     totalFoodCalories.totalCalories - totalFoodCalories.totalExerciseCalories;
   console.log(`total net calories: ${totalNetCalories}`);
-  
-};
+}
 //end total calories on date change
-
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
   const elems = document.querySelectorAll(".modal");
@@ -205,8 +197,7 @@ submitFoodButton.addEventListener("click", async (event) => {
 
     const formModal = document.getElementById("myModal");
     formModal.reset();
-    const instance = M.Modal.getInstance(
-      document.getElementById("foodModal"));
+    const instance = M.Modal.getInstance(document.getElementById("foodModal"));
     instance.close();
     window.location.reload();
   }
@@ -267,11 +258,10 @@ function dateSelect() {
     deleteFood.setAttribute("id", `delete-${singleFood.foodId}`);
     deleteFood.setAttribute("onclick", "handleDeleteFood(event)");
   }
-  
-  updateTotalFoodCalories();
-};
-// Date Selection End
 
+  updateTotalFoodCalories();
+}
+// Date Selection End
 
 // Total calories eaten start
 function updateTotalFoodCalories() {
@@ -290,7 +280,6 @@ function updateTotalFoodCalories() {
     return dateFormatChange === dateSelector;
   });
 
-
   let totalCalories = 0;
 
   if (dateFilter.length > 0) {
@@ -307,7 +296,6 @@ function updateTotalFoodCalories() {
   totalCalorieFood.appendChild(totalCaloriesDiv);
   totalCaloriesDiv.appendChild(totalCalorieLine);
   totalCaloriesDiv.setAttribute("class", "row");
- 
 
   const totalFoodCalories = JSON.parse(localStorage.getItem("dateEx")) || {};
   totalFoodCalories.totalCalories = totalCalories;
@@ -317,8 +305,7 @@ function updateTotalFoodCalories() {
   const totalNetCalories =
     totalFoodCalories.totalCalories - totalFoodCalories.totalExerciseCalories;
   console.log(`total net calories: ${totalNetCalories}`);
-  
-};
+}
 //end total calories on date change
 
 // Call updateTotalFoodCalories to update total calories and get the value
@@ -326,8 +313,6 @@ updateTotalFoodCalories();
 
 // Existing code to display food records
 const lastFood = JSON.parse(localStorage.getItem("parentFood")) || [];
-
-
 
 function handleDeleteFood(event) {
   const deleteId = event.target.id.substring(7);
@@ -341,4 +326,4 @@ function handleDeleteFood(event) {
   window.location.reload();
 }
 
-savedDate()
+savedDate();

@@ -39,26 +39,26 @@ main {
 }
 
 .datepicker-table {
-  width: 200px;
+  width: 300px;
   font-size: 1rem;
   margin: 0 auto;
 }
 
 .datepicker-calendar {
-  width: 200px;
+  width: 300px;
 }
 
 .datepicker-controls {
-  width: 200px;
+  width: 300px;
   margin: 0 auto;
 }
 
 .datepicker-modal {
-  width: 200px;
+  width: 300px;
 }
 
 .datepicker-footer {
-  width: 200px;
+  width: 300px;
   margin: 0;
 }
 

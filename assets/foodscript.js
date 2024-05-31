@@ -6,6 +6,119 @@ const totalCalorieFood = document.getElementById("totalCalorieFood");
 const dailyFoodRecords = document.getElementById("daily-food-records");
 const msgDiv = document.querySelector("#msg");
 const dateSelectorInput = document.getElementById("date-select");
+const foodRecordContainer = document.getElementById("daily-food-records");
+
+
+// Date Selection on page load Start
+function savedDate() {
+  while (foodRecordContainer.firstChild) {
+    foodRecordContainer.removeChild(foodRecordContainer.firstChild);
+  }
+  const dateSelector = window.localStorage.getItem("dateSelector");
+  console.log(`dateSelector: ${dateSelector}`);
+  const lastFood = JSON.parse(localStorage.getItem("parentFood")) || [];
+  const dateFilter = lastFood.filter((lastFoodDate) => {
+    const foodDate = dayjs(lastFoodDate.foodDateForm, "MMM DD,YYYY");
+    const dateFormatChange = dayjs(foodDate).format("YYYY-MM-DD");
+    console.log(`dateformatchange ${dateFormatChange}`);
+    console.log(`foodformdateformat ${foodDate}`);
+    console.log(
+      `lastfooddate ${lastFoodDate.foodDateForm}`,
+      `dateSelector ${dateSelector}`
+    );
+    localStorage.setItem("dateSelected", dateSelector);
+    return dateFormatChange === dateSelector;
+  });
+
+  // Sort reverse chronological order
+  const sortResult = dateFilter.sort(
+    (a, b) => new Date(b.dttm) - new Date(a.dttm)
+  );
+
+  console.log(`dateFilter`, dateFilter);
+
+  for (const singleFood of sortResult) {
+    const dateGroup = document.createElement("div");
+    const foodLine = document.createElement("div");
+    const foodRow = document.createElement("div");
+    const foodRecord = document.createElement("div");
+    const calorieRecord = document.createElement("div");
+    const deleteFood = document.createElement("a");
+
+    foodRecord.textContent = singleFood.foodNameForm;
+    calorieRecord.textContent = singleFood.foodCaloriesForm;
+    deleteFood.textContent = "×";
+
+    foodRecordContainer.appendChild(dateGroup);
+    dateGroup.appendChild(foodLine);
+    foodLine.appendChild(foodRow);
+    foodRow.appendChild(foodRecord);
+    foodRow.appendChild(calorieRecord);
+    foodRow.appendChild(deleteFood);
+
+    foodRow.setAttribute("class", "row food-row");
+    foodRecord.setAttribute("class", "col s6 food-record");
+    calorieRecord.setAttribute("class", "col s5 calorie-record");
+    deleteFood.setAttribute("class", "col s1 delete-record");
+    deleteFood.setAttribute("id", `delete-${singleFood.foodId}`);
+    deleteFood.setAttribute("onclick", "handleDeleteFood(event)");
+  }
+  
+  updateTotalFoodCalorie();
+};
+// Date Selection End
+
+
+// Total calories eaten start
+function updateTotalFoodCalorie() {
+  const existingFood = JSON.parse(localStorage.getItem("parentFood")) || [];
+  const dateSelector = window.localStorage.getItem("dateSelector");
+  console.log(`dateSelector2: ${dateSelector}`);
+  const dateFilter = existingFood.filter((lastFoodDate) => {
+    const foodDate = dayjs(lastFoodDate.foodDateForm, "MMM DD,YYYY");
+    const dateFormatChange = dayjs(foodDate).format("YYYY-MM-DD");
+    console.log(`dateformatchange2 ${dateFormatChange}`);
+    console.log(`foodformdateformat2 ${foodDate}`);
+    console.log(
+      `lastfooddate2 ${lastFoodDate.foodDateForm}`,
+      `dateselector2 ${dateSelector}`
+    );
+    return dateFormatChange === dateSelector;
+  });
+
+
+  let totalCalories = 0;
+
+  if (dateFilter.length > 0) {
+    for (let i = 0; i < dateFilter.length; i++) {
+      totalCalories += parseInt(dateFilter[i].foodCaloriesForm, 10);
+    }
+  }
+
+  console.log(`Total food calories: ${totalCalories}`);
+  totalCalorieFood.innerHTML = ""; // Clear previous total
+  const totalCaloriesDiv = document.createElement("div");
+  const totalCalorieLine = document.createElement("h5");
+  totalCalorieLine.innerText = `Total Calories Eaten: ${totalCalories}`;
+  totalCalorieFood.appendChild(totalCaloriesDiv);
+  totalCaloriesDiv.appendChild(totalCalorieLine);
+  totalCaloriesDiv.setAttribute("class", "row");
+ 
+
+  const totalFoodCalories = JSON.parse(localStorage.getItem("dateEx")) || {};
+  totalFoodCalories.totalCalories = totalCalories;
+  console.log(`totalfoodcalories ${totalFoodCalories}`);
+  localStorage.setItem("dateEx", JSON.stringify(totalFoodCalories));
+
+  const totalNetCalories =
+    totalFoodCalories.totalCalories - totalFoodCalories.totalExerciseCalories;
+  console.log(`total net calories: ${totalNetCalories}`);
+  
+};
+//end total calories on date change
+
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const elems = document.querySelectorAll(".modal");
@@ -126,7 +239,7 @@ function dateSelect() {
     (a, b) => new Date(b.dttm) - new Date(a.dttm)
   );
 
-  console.log(`datefilter`, dateFilter);
+  console.log(`dateFilter`, dateFilter);
 
   for (const singleFood of sortResult) {
     const dateGroup = document.createElement("div");
@@ -189,23 +302,24 @@ function updateTotalFoodCalories() {
   console.log(`Total food calories: ${totalCalories}`);
   totalCalorieFood.innerHTML = ""; // Clear previous total
   const totalCaloriesDiv = document.createElement("div");
-  const totalCalorieLine = document.createElement("h6");
+  const totalCalorieLine = document.createElement("h5");
   totalCalorieLine.innerText = `Total Calories Eaten: ${totalCalories}`;
   totalCalorieFood.appendChild(totalCaloriesDiv);
   totalCaloriesDiv.appendChild(totalCalorieLine);
   totalCaloriesDiv.setAttribute("class", "row");
  
 
-  const totalFoodCalories = JSON.parse(localStorage.getItem("05/29/2024")) || {};
+  const totalFoodCalories = JSON.parse(localStorage.getItem("dateEx")) || {};
   totalFoodCalories.totalCalories = totalCalories;
   console.log(`totalfoodcalories ${totalFoodCalories}`);
-  localStorage.setItem("05/29/2024", JSON.stringify(totalFoodCalories));
+  localStorage.setItem("dateEx", JSON.stringify(totalFoodCalories));
 
   const totalNetCalories =
     totalFoodCalories.totalCalories - totalFoodCalories.totalExerciseCalories;
   console.log(`total net calories: ${totalNetCalories}`);
   
 };
+//end total calories on date change
 
 // Call updateTotalFoodCalories to update total calories and get the value
 updateTotalFoodCalories();
@@ -213,7 +327,7 @@ updateTotalFoodCalories();
 // Existing code to display food records
 const lastFood = JSON.parse(localStorage.getItem("parentFood")) || [];
 
-const foodRecordContainer = document.getElementById("daily-food-records");
+
 
 function handleDeleteFood(event) {
   const deleteId = event.target.id.substring(7);
@@ -226,3 +340,5 @@ function handleDeleteFood(event) {
   updateTotalFoodCalories(); // Update total calories after deletion
   window.location.reload();
 }
+
+savedDate()
